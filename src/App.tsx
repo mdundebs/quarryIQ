@@ -27,20 +27,26 @@ import {
   Play,
   CircuitBoard,
   Share2,
-  Check
+  Check,
+  ShieldAlert,
+  DollarSign,
+  SunMedium
 } from 'lucide-react';
 
 import { LandingPage } from './components/LandingPage';
 import { Dashboard } from './components/Dashboard';
+import { RiskDashboard } from './components/RiskDashboard';
 import { ControlRoom } from './components/ControlRoom';
 import { WhatIfSimulator } from './components/WhatIfSimulator';
 import { SafetyOfficer } from './components/SafetyOfficer';
 import { Maintenance } from './components/Maintenance';
 import { DigitalTwin } from './components/DigitalTwin';
 import { SolarEnergy } from './components/SolarEnergy';
+import { SolarSynergy } from './components/SolarSynergy';
 import { Reports } from './components/Reports';
 import { Weighbridge } from './components/Weighbridge';
 import { SystemComponents } from './components/SystemComponents';
+import { PricingROI } from './components/PricingROI';
 import { DemoTour } from './components/DemoTour';
 import { UserManualDrawer } from './components/UserManualDrawer';
 import { AutoPlayDemo } from './components/AutoPlayDemo';
@@ -48,6 +54,9 @@ import { AutoPlayDemo } from './components/AutoPlayDemo';
 type TabId =
   | 'landing'
   | 'dashboard'
+  | 'risk-dashboard'
+  | 'pricing-roi'
+  | 'solar-synergy'
   | 'control-room'
   | 'what-if'
   | 'safety'
@@ -67,6 +76,9 @@ interface TabItem {
 
 const TABS: TabItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
+  { id: 'risk-dashboard', label: 'Risk Dashboard', icon: ShieldAlert, badge: 'Site Assessment' },
+  { id: 'pricing-roi', label: 'Pricing & ROI', icon: DollarSign, badge: 'MD Justification' },
+  { id: 'solar-synergy', label: 'Solar + Synergy', icon: SunMedium, badge: '1 MW Tender' },
   { id: 'control-room', label: 'Control Room', icon: Sliders, badge: 'Dynamic' },
   { id: 'what-if', label: 'What-If Simulator', icon: Cpu, badge: '5 Scenarios' },
   { id: 'safety', label: 'Safety Officer', icon: ShieldCheck },
@@ -153,13 +165,14 @@ export default function App() {
                   <div className="flex items-center gap-1.5">
                     <span className="font-black text-lg tracking-tight text-white group-hover:text-[#FFC72C] transition-colors">
                       Quarry<span className="text-[#FFC72C]">IQ</span>
+                      <span className="text-xs font-normal text-stone-400 ml-1.5 hidden sm:inline">| SitePlan AI</span>
                     </span>
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-stone-800 text-stone-300 border border-stone-700">
                       LIVE
                     </span>
                   </div>
                   <div className="text-[10px] text-stone-400 font-medium">
-                    Rock-to-Revenue Intelligence
+                    SitePlan AI &bull; Davis Granite Engineering &amp; Risk Intelligence
                   </div>
                 </div>
               </button>
@@ -537,6 +550,9 @@ export default function App() {
             {/* Tab Views with subtle fade-in animation and tab-level footer */}
             <div key={currentView} className="animate-fadeIn space-y-8">
               {currentView === 'dashboard' && <Dashboard liveDataEnabled={liveDataEnabled} />}
+              {currentView === 'risk-dashboard' && <RiskDashboard />}
+              {currentView === 'pricing-roi' && <PricingROI />}
+              {currentView === 'solar-synergy' && <SolarSynergy />}
               {currentView === 'control-room' && <ControlRoom />}
               {currentView === 'what-if' && <WhatIfSimulator />}
               {currentView === 'safety' && <SafetyOfficer />}

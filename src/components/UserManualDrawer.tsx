@@ -17,7 +17,10 @@ import {
   Camera,
   Layers,
   Zap,
-  Truck
+  Truck,
+  ShieldAlert,
+  DollarSign,
+  Sun
 } from 'lucide-react';
 
 interface UserManualDrawerProps {
@@ -78,8 +81,52 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
       mockupType: 'dashboard',
     },
     {
+      id: 'riskDashboard',
+      title: '3. Risk Dashboard (Davis Granite Site Assessment)',
+      icon: ShieldAlert,
+      summary: 'Real-time telemetry across 8 critical electrical, environmental, and grid risk parameters.',
+      content: [
+        'Plant Risk Score: Live 0–100 composite index weighting Transformer Load, Power Factor, Motor Megger, MCC Room Temp & Humidity, Water Leak, Lightning, and Grid Stability.',
+        'Transformer Load %: 100% warning, 110% critical threshold to prevent Buchholz relay trips on 1.5 MVA and 2.0 MVA units.',
+        'Power Factor: Kept between 0.95 and 1.00 LAG to eliminate punitive ZESA maximum demand kVAR surcharges.',
+        'Motor Insulation (Megger): Continuous dielectric monitoring with alarms below 1.0 MΩ preventing catastrophic stator flashovers.',
+        'Risk Mitigation Calculator: Calculate exact annual cost savings prevented by automated predictive alarms ($X downtime cost × Y frequency × % prevented).',
+        'SitePlan AI Assistant: One-click interactive engineering guidance trained on Davis Granite operational conditions.',
+      ],
+      mockupType: 'dashboard',
+    },
+    {
+      id: 'pricingRoi',
+      title: '4. Pricing & ROI Model (MD Justification)',
+      icon: DollarSign,
+      summary: 'Complete engineering cost breakdown, 3 commercial options, What-If payback sensitivity, and one-pager PDF generation.',
+      content: [
+        'Turnkey Cost Breakdown: Full $210,045 schedule (MCC System $87,550, Intelligence Layer $73,635, Commissioning $24,000, Contingency $24,860).',
+        'Option Selector: Option A ($215k + $2.2k/mo), Option B ($235k + $2.5k/mo Recommended), Option C ($255k + $2.8k/mo).',
+        'C-Suite Metrics: 3-Year Total Investment, Annual Delivered Value ($215,840/yr baseline), Capital Payback in months, and 5-Year ROI multiple.',
+        'What-If Sensitivity Slider: Adjust delivered value between 40% and 120% to observe how payback dynamically shifts in real time.',
+        'Comparison Bar Chart: Side-by-side visualization of 5-Year Capex+Opex vs. 5-Year Net Economic Benefit.',
+        'Export ROI One-Pager: Generates executive board-ready PDF document branded with Fireflies Energy.',
+      ],
+      mockupType: 'control',
+    },
+    {
+      id: 'solarSynergy',
+      title: '5. Solar + Automation Synergy (Tender SPV/001/2026)',
+      icon: Sun,
+      summary: 'Demonstrates how automation amplifies the planned 1 MW solar tender, cutting payback from 3.7 to 1.2 years and capturing +$160,720/year.',
+      content: [
+        'Solar Without Automation (65% self-consumption): Shows losses from 0.85 credit discount on exported power, and 100% idle solar array during diesel load-shedding.',
+        'Solar With Automation (90% self-consumption): Explains kinetic rock buffer shifting, peak shaving (25-40% ZESA drop), and safe solar-diesel synchronization.',
+        'Synergy Value Schedule ($160,720/yr): Self-consumption uplift ($21,197), diesel fuel reduction ($84,863), carbon credits ($4,260), and green rock premium ($50,400).',
+        'Tender SPV/001/2026 Alignment: Explains why QuarryIQ automation is 100% complementary to the 1 MW solar EPC tender, not competitive.',
+        'Combined Capital Return: Shows how combined solar + automation capex pays back in 1.2 years instead of 3.7 years for solar alone.',
+      ],
+      mockupType: 'dashboard',
+    },
+    {
       id: 'controlRoom',
-      title: '3. Control Room',
+      title: '6. Control Room',
       icon: Sliders,
       summary: 'Management testing ground to enter real numbers and immediately see the financial impact.',
       content: [
@@ -93,7 +140,7 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
     },
     {
       id: 'whatIf',
-      title: '4. What-If Simulator',
+      title: '5. What-If Simulator',
       icon: Cpu,
       summary: 'One-click scenarios testing what happens during power cuts, huge orders, or equipment troubles.',
       content: [
@@ -105,7 +152,7 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
     },
     {
       id: 'reports',
-      title: '5. Reports & WhatsApp Briefings',
+      title: '6. Reports & WhatsApp Briefings',
       icon: FileText,
       summary: 'The 06:00 AM daily executive WhatsApp brief and downloadable board audits.',
       content: [
@@ -117,7 +164,7 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
     },
     {
       id: 'roles',
-      title: '6. User Roles & Access',
+      title: '7. User Roles & Access',
       icon: Users,
       summary: 'Permissions for Managing Director, Quarry Manager, Weighbridge Operator, and Shift Foreman.',
       content: [
@@ -130,7 +177,7 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
     },
     {
       id: 'troubleshooting',
-      title: '7. Troubleshooting & FAQs',
+      title: '8. Troubleshooting & FAQs',
       icon: AlertCircle,
       summary: 'Quick answers for common sensor alerts and offline telemetry questions.',
       content: [
@@ -142,7 +189,7 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
     },
     {
       id: 'support',
-      title: '8. Contact Support & Engineering',
+      title: '9. Contact Support & Engineering',
       icon: PhoneCall,
       summary: 'Direct lines to Fireflies Energy engineering and technical field support.',
       content: [

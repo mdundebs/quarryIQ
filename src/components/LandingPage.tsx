@@ -70,6 +70,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onSt
       desc: 'Material balance equation: Closing Stock = Opening + Mined - Dispatched. Automated stockpile loss auditing.',
     },
     {
+      id: 'solar-synergy',
+      icon: Sun,
+      title: 'Solar Synergy (Tender SPV/001/2026)',
+      tag: '+$160,720/yr Added',
+      desc: 'Amplifies 1 MW planned solar tender: cuts payback from 3.7 to 1.2 years, lifts self-consumption to 90%, and eliminates diesel during outages.',
+    },
+    {
       id: 'solar',
       icon: Sun,
       title: 'Solar & "Virtual Battery"',
