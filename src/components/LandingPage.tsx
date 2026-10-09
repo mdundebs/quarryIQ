@@ -17,8 +17,10 @@ import {
   Clock,
   Sparkles,
   ChevronRight,
-  Sliders
+  Sliders,
+  AlertTriangle
 } from 'lucide-react';
+import { RoiDisclaimerBanner } from './RoiDisclaimerBanner';
 
 interface LandingPageProps {
   onEnterDashboard: (targetTab?: string) => void;
@@ -74,7 +76,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onSt
       icon: Sun,
       title: 'Solar Synergy (Tender SPV/001/2026)',
       tag: '+$160,720/yr Added',
-      desc: 'Amplifies 1 MW planned solar tender: cuts payback from 3.7 to 1.2 years, lifts self-consumption to 90%, and eliminates diesel during outages.',
+      desc: 'Amplifies planned solar PV rollout (~220 kWp Bulawayo PoC + Harare expansion): cuts combined payback from 3.7 to 1.2 years, lifts self-consumption to 90%, and eliminates diesel during outages.',
     },
     {
       id: 'solar',
@@ -216,6 +218,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onSt
                 </div>
 
                 <div className="p-6 space-y-6">
+                  {/* Disclaimer callout */}
+                  <RoiDisclaimerBanner />
+
                   {/* Sliders */}
                   <div className="space-y-4">
                     <div>

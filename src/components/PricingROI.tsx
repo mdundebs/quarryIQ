@@ -21,7 +21,9 @@ import {
   Sun,
   Fuel,
   Leaf,
-  Award
+  Award,
+  HelpCircle,
+  FileSpreadsheet
 } from 'lucide-react';
 import {
   BarChart,
@@ -34,6 +36,11 @@ import {
   Legend,
   Cell
 } from 'recharts';
+import {
+  RoiDisclaimerBanner,
+  RoiTooltipBadge,
+  ROI_TOOLTIP_TEXT
+} from './RoiDisclaimerBanner';
 
 export interface CostItem {
   category: string;
@@ -213,12 +220,56 @@ export const PricingROI: React.FC = () => {
         fullName: opt.name,
         isRecommended: opt.id === 'option-b',
         'Total Investment (5-Yr)': metrics.fiveYearTotalInvestment,
-        '5-Year Net Benefit': Math.max(0, metrics.fiveYearNetBenefit),
-        'Payback (Months)': metrics.paybackMonths,
-        'ROI Multiple': metrics.fiveYearRoiMultiple
+        'Estimated 5-Year Value': Math.max(0, metrics.fiveYearNetBenefit),
+        'Estimated Payback (Months)': metrics.paybackMonths,
+        'Estimated ROI Multiple': metrics.fiveYearRoiMultiple
       };
     });
   }, [dynamicAnnualValue.total]);
+
+  // Qualitative & Transformation Value Matrix
+  const qualitativeValueItems = [
+    {
+      category: 'Energy savings (ZESA)',
+      type: 'Quantitative' as const,
+      description: 'Measurable on utility bill via peak shaving, automated soft-start ramp, and APFC power factor >= 0.98'
+    },
+    {
+      category: 'Diesel displacement',
+      type: 'Quantitative' as const,
+      description: 'Measurable on fuel logs through solar PV synchronization during ZETDC outages'
+    },
+    {
+      category: 'Downtime avoidance',
+      type: 'Semi-quantitative' as const,
+      description: 'Based on industry benchmarks ($18,500/event avoided across motor megger, trench water, and thermal trips)'
+    },
+    {
+      category: 'Risk mitigation',
+      type: 'Qualitative' as const,
+      description: 'Prevents catastrophic losses that haven\'t happened yet (transformer Buchholz explosion, stator flashover)'
+    },
+    {
+      category: 'Compliance value',
+      type: 'Qualitative' as const,
+      description: 'Avoids statutory utility penalties, protects EMA environmental compliance and license to operate'
+    },
+    {
+      category: 'Data-driven decisions',
+      type: 'Qualitative' as const,
+      description: 'Better planning, stockpiling, customer confidence, and verifiable yield logs for road contractors'
+    },
+    {
+      category: '24-hour operations',
+      type: 'Semi-quantitative' as const,
+      description: 'Higher output with same labour force enabled by automated crusher choke-feeding and surge buffering'
+    },
+    {
+      category: 'Green traceable premium',
+      type: 'Semi-quantitative' as const,
+      description: 'Requires buyer willingness to pay for low-carbon, verified clean crushed aggregate certifications'
+    }
+  ];
 
   // Export PDF Handler (creates clean print dialog optimized for print/save-as-PDF)
   const handleExportOnePager = () => {
@@ -227,6 +278,9 @@ export const PricingROI: React.FC = () => {
 
   return (
     <div className="space-y-8 print:p-0 print:space-y-4">
+      {/* 1. DISCLAIMER BANNER: Amber warning border clarifying estimated transformation value */}
+      <RoiDisclaimerBanner />
+
       {/* Printable Executive Cover Header */}
       <div className="bg-gradient-to-r from-[#0B0B0F] via-stone-900 to-[#1A1A22] border border-stone-800 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden shadow-xl print:border-none print:shadow-none print:p-4 print:text-black print:bg-white">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#FFC72C]/10 rounded-full blur-3xl pointer-events-none print:hidden" />
@@ -244,7 +298,7 @@ export const PricingROI: React.FC = () => {
               Pricing Model &amp; Capital ROI Justification
             </h1>
             <p className="text-stone-400 text-sm sm:text-base mt-2 max-w-2xl print:text-stone-700">
-              Rigorous economic analysis comparing project engineering Capex of <span className="text-white font-bold print:text-black">$210,045</span> against guaranteed annual risk defense, power optimization, and rock production uplift.
+              Rigorous economic analysis comparing project engineering Capex of <span className="text-white font-bold print:text-black">$210,045</span> against estimated business transformation value, power optimization, and operational efficiency gains.
             </p>
           </div>
 
@@ -423,12 +477,12 @@ export const PricingROI: React.FC = () => {
                     <span className="font-bold text-stone-900">${metrics.threeYearInvestment.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-stone-600">
-                    <span>Payback Period:</span>
-                    <span className="font-bold text-emerald-700">{metrics.paybackMonths} months</span>
+                    <span title={ROI_TOOLTIP_TEXT} className="cursor-help">Estimated Payback:</span>
+                    <span className="font-bold text-emerald-700" title={ROI_TOOLTIP_TEXT}>{metrics.paybackMonths} months</span>
                   </div>
                   <div className="flex justify-between text-stone-600">
-                    <span>5-Yr ROI:</span>
-                    <span className="font-bold text-[#0B0B0F]">{metrics.fiveYearRoiMultiple}x multiple</span>
+                    <span title={ROI_TOOLTIP_TEXT} className="cursor-help">Estimated Return on Investment:</span>
+                    <span className="font-bold text-[#0B0B0F]" title={ROI_TOOLTIP_TEXT}>{metrics.fiveYearRoiMultiple}x multiple</span>
                   </div>
                 </div>
               </div>
@@ -463,13 +517,17 @@ export const PricingROI: React.FC = () => {
               </div>
             </div>
 
-            {/* Metric 2: Annual Value Delivered */}
+            {/* Metric 2: Estimated Annual Business Value */}
             <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200">
               <div className="flex items-center justify-between text-emerald-800 text-xs mb-1">
-                <span className="font-semibold">Annual Value Delivered</span>
+                <span className="font-semibold">
+                  <RoiTooltipBadge text={ROI_TOOLTIP_TEXT}>
+                    Estimated Annual Business Value
+                  </RoiTooltipBadge>
+                </span>
                 <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
               </div>
-              <div className="text-2xl font-black font-mono text-emerald-700">
+              <div className="text-2xl font-black font-mono text-emerald-700" title={ROI_TOOLTIP_TEXT}>
                 ${dynamicAnnualValue.total.toLocaleString()}
                 <span className="text-xs text-emerald-600 font-normal ml-1">/yr</span>
               </div>
@@ -478,13 +536,17 @@ export const PricingROI: React.FC = () => {
               </div>
             </div>
 
-            {/* Metric 3: Payback Period */}
+            {/* Metric 3: Estimated Payback */}
             <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200">
               <div className="flex items-center justify-between text-amber-800 text-xs mb-1">
-                <span className="font-semibold">Capital Payback Period</span>
+                <span className="font-semibold">
+                  <RoiTooltipBadge text={ROI_TOOLTIP_TEXT}>
+                    Estimated Payback
+                  </RoiTooltipBadge>
+                </span>
                 <Clock className="w-3.5 h-3.5 text-amber-600" />
               </div>
-              <div className="text-2xl font-black font-mono text-amber-900">
+              <div className="text-2xl font-black font-mono text-amber-900" title={ROI_TOOLTIP_TEXT}>
                 {currentMetrics.paybackMonths}
                 <span className="text-xs text-amber-700 font-normal ml-1">months</span>
               </div>
@@ -493,20 +555,86 @@ export const PricingROI: React.FC = () => {
               </div>
             </div>
 
-            {/* Metric 4: 5-Year ROI Multiple */}
+            {/* Metric 4: Estimated Return on Investment */}
             <div className="p-4 rounded-xl bg-[#0B0B0F] text-white border border-stone-800">
               <div className="flex items-center justify-between text-stone-400 text-xs mb-1">
-                <span className="text-[#FFC72C] font-semibold">5-Year ROI Multiple</span>
+                <span className="text-[#FFC72C] font-semibold">
+                  <RoiTooltipBadge text={ROI_TOOLTIP_TEXT}>
+                    Estimated Return on Investment
+                  </RoiTooltipBadge>
+                </span>
                 <TrendingUp className="w-3.5 h-3.5 text-[#FFC72C]" />
               </div>
-              <div className="text-2xl font-black font-mono text-white">
+              <div className="text-2xl font-black font-mono text-white" title={ROI_TOOLTIP_TEXT}>
                 {currentMetrics.fiveYearRoiMultiple}x
               </div>
               <div className="text-[11px] text-stone-300 mt-1">
-                ${currentMetrics.fiveYearNetBenefit.toLocaleString()} 5-yr net profit gain
+                ${currentMetrics.fiveYearNetBenefit.toLocaleString()} Estimated 5-Year Value
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* NEW SECTION: Qualitative Value Matrix */}
+      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+          <div>
+            <div className="flex items-center gap-2">
+              <FileSpreadsheet className="w-5 h-5 text-[#0B0B0F]" />
+              <h2 className="text-xl font-bold text-stone-900">Qualitative &amp; Strategic Value Dimensions</h2>
+            </div>
+            <p className="text-xs sm:text-sm text-stone-500 mt-1">
+              Distinguishing direct utility-measurable cash offsets from systemic risk protection and enterprise license safeguards.
+            </p>
+          </div>
+          <div className="text-xs px-3 py-1 rounded-full bg-stone-100 text-stone-700 font-mono border border-stone-200">
+            Transformation Matrix &bull; 8 Pillars
+          </div>
+        </div>
+
+        <div className="overflow-x-auto mt-6">
+          <table className="w-full text-left text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-stone-200 text-stone-500 text-xs uppercase tracking-wider bg-stone-50/80">
+                <th className="py-3 px-4 font-semibold">Value Category</th>
+                <th className="py-3 px-4 font-semibold">Type</th>
+                <th className="py-3 px-4 font-semibold">Description</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-100">
+              {qualitativeValueItems.map((row, idx) => {
+                const typeBadgeClass =
+                  row.type === 'Quantitative'
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                    : row.type === 'Semi-quantitative'
+                    ? 'bg-blue-50 text-blue-800 border-blue-200'
+                    : 'bg-purple-50 text-purple-800 border-purple-200';
+
+                return (
+                  <tr key={idx} className="hover:bg-stone-50/60 transition-colors">
+                    <td className="py-3.5 px-4 font-semibold text-stone-900 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          row.type === 'Quantitative' ? 'bg-emerald-500' :
+                          row.type === 'Semi-quantitative' ? 'bg-blue-500' : 'bg-purple-500'
+                        }`} />
+                        {row.category}
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${typeBadgeClass}`}>
+                        {row.type}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4 text-xs sm:text-sm text-stone-600 leading-relaxed">
+                      {row.description}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -521,7 +649,7 @@ export const PricingROI: React.FC = () => {
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-stone-500 mt-1">
-              How QuarryIQ automation amplifies the planned <strong>1 MW solar installation</strong>, accelerating payback from <strong>3.7 years down to 1.2 years</strong>.
+              How QuarryIQ automation amplifies the planned <strong>solar installation (~220 kWp Bulawayo PoC + Harare expansion)</strong>, accelerating payback from <strong>3.7 years down to 1.2 years</strong>.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -536,7 +664,7 @@ export const PricingROI: React.FC = () => {
           {/* Solar Alone */}
           <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 space-y-2.5">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-stone-800 text-sm">Solar Without Automation (1 MW Standalone)</span>
+              <span className="font-bold text-stone-800 text-sm">Solar Without Automation (Standalone PV)</span>
               <span className="text-xs font-mono font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">3.7 Yr Payback</span>
             </div>
             <ul className="text-xs text-stone-600 space-y-1.5 list-disc pl-4">
@@ -589,10 +717,10 @@ export const PricingROI: React.FC = () => {
         <div className="p-4 rounded-xl bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="text-xs">
             <span className="text-[#FFC72C] font-bold block uppercase text-[11px]">
-              Tender SPV/001/2026 Strategic Alignment
+              Tender SPV/001/2026 Strategic Alignment &bull; Multi-Site Rollout
             </span>
             <p className="text-stone-300 mt-0.5">
-              Automation is <strong>COMPLEMENTARY</strong> to the solar tender, not competitive. It provides the intelligent microgrid controls needed to extract maximum financial return from the 1 MW PV plant.
+              Automation is <strong>COMPLEMENTARY</strong> to the solar tender, not competitive. Phase 1 proves ~220 kWp at Bulawayo (CAPEX ~$88k), unlocking streamlined scale across Harare (~250–350 kWp) and Marondera.
             </p>
           </div>
           <div className="text-right shrink-0">
@@ -672,8 +800,14 @@ export const PricingROI: React.FC = () => {
             {/* Breakdown of this dynamic annual value */}
             <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 mt-4 space-y-2 text-xs">
               <div className="font-semibold text-stone-700 flex items-center justify-between">
-                <span>Effective Annual Value Delivered at {valueFactorPercent}%:</span>
-                <span className="text-base font-black font-mono text-stone-900">${dynamicAnnualValue.total.toLocaleString()}/yr</span>
+                <span className="flex items-center gap-1.5">
+                  <RoiTooltipBadge text={ROI_TOOLTIP_TEXT}>
+                    Estimated Annual Business Value at {valueFactorPercent}%:
+                  </RoiTooltipBadge>
+                </span>
+                <span className="text-base font-black font-mono text-stone-900" title={ROI_TOOLTIP_TEXT}>
+                  ${dynamicAnnualValue.total.toLocaleString()}/yr
+                </span>
               </div>
               <div className="grid grid-cols-3 gap-2 pt-2 border-t border-stone-200 text-stone-600">
                 <div>
@@ -697,12 +831,14 @@ export const PricingROI: React.FC = () => {
             <div className="text-xs uppercase tracking-wider text-[#FFC72C] font-bold mb-1">
               Real-Time Sensitivity Impact
             </div>
-            <div className="text-xl font-bold">
-              Payback at {valueFactorPercent}% Value:
+            <div className="text-xl font-bold flex items-center gap-2">
+              <RoiTooltipBadge text={ROI_TOOLTIP_TEXT}>
+                Estimated Payback at {valueFactorPercent}% Value:
+              </RoiTooltipBadge>
             </div>
             
             <div className="mt-4 flex items-baseline gap-2">
-              <span className="text-4xl font-extrabold font-mono text-white">
+              <span className="text-4xl font-extrabold font-mono text-white" title={ROI_TOOLTIP_TEXT}>
                 {currentMetrics.paybackMonths}
               </span>
               <span className="text-stone-400 font-medium">months</span>
@@ -773,7 +909,7 @@ export const PricingROI: React.FC = () => {
                 wrapperStyle={{ paddingBottom: '16px', fontSize: '12px' }}
               />
               <Bar dataKey="Total Investment (5-Yr)" fill="#78716c" radius={[6, 6, 0, 0]} name="5-Year Total Investment ($)" />
-              <Bar dataKey="5-Year Net Benefit" fill="#10b981" radius={[6, 6, 0, 0]} name="5-Year Net Economic Benefit ($)">
+              <Bar dataKey="Estimated 5-Year Value" fill="#10b981" radius={[6, 6, 0, 0]} name="Estimated 5-Year Value ($)">
                 {comparisonChartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
@@ -809,16 +945,16 @@ export const PricingROI: React.FC = () => {
                 </div>
                 <div className="space-y-1 font-mono text-xs">
                   <div className="flex justify-between text-stone-600">
-                    <span>5-Yr Net Gain:</span>
-                    <span className="font-bold text-emerald-700">${metrics.fiveYearNetBenefit.toLocaleString()}</span>
+                    <span title={ROI_TOOLTIP_TEXT} className="cursor-help">Estimated 5-Year Value:</span>
+                    <span className="font-bold text-emerald-700" title={ROI_TOOLTIP_TEXT}>${metrics.fiveYearNetBenefit.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-stone-600">
-                    <span>Payback:</span>
-                    <span className="font-bold text-stone-900">{metrics.paybackMonths} mo</span>
+                    <span title={ROI_TOOLTIP_TEXT} className="cursor-help">Estimated Payback:</span>
+                    <span className="font-bold text-stone-900" title={ROI_TOOLTIP_TEXT}>{metrics.paybackMonths} mo</span>
                   </div>
                   <div className="flex justify-between text-stone-600">
-                    <span>ROI Multiple:</span>
-                    <span className="font-bold text-stone-900">{metrics.fiveYearRoiMultiple}x</span>
+                    <span title={ROI_TOOLTIP_TEXT} className="cursor-help">Estimated ROI:</span>
+                    <span className="font-bold text-stone-900" title={ROI_TOOLTIP_TEXT}>{metrics.fiveYearRoiMultiple}x</span>
                   </div>
                 </div>
               </div>
@@ -898,35 +1034,35 @@ export const PricingROI: React.FC = () => {
             <div className="flex items-center gap-2">
               <Sun className="w-4 h-4 text-[#FFC72C] print:text-amber-600" />
               <h4 className="font-bold text-white print:text-stone-900 text-xs sm:text-sm uppercase tracking-wide">
-                Section 4: Solar + Automation Combined Value (Tender SPV/001/2026)
+                Section 4: Solar + Automation Combined Value (Bulawayo 220 kW Reference)
               </h4>
             </div>
             <span className="text-xs font-mono font-bold text-emerald-400 print:text-emerald-700">
-              +$160,720 / yr Added Value
+              ~$150,000 / yr Combined Value
             </span>
           </div>
 
           <div className="p-4 rounded-xl bg-white/5 border border-white/10 print:bg-stone-100/70 print:border-stone-300 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             <div>
-              <span className="text-stone-400 print:text-stone-600 block text-[11px] font-mono">1 MW Solar Standalone</span>
-              <span className="text-rose-400 print:text-rose-700 font-bold block mt-0.5">3.7 Years Payback</span>
+              <span className="text-stone-400 print:text-stone-600 block text-[11px] font-mono">Bulawayo Phase 1 Solar Standalone</span>
+              <span className="text-amber-400 print:text-amber-700 font-bold block mt-0.5">~3.0 Years Payback</span>
               <span className="text-stone-400 print:text-stone-600 text-[11px] block mt-1">
-                65% self-consumption &bull; Inverters trip on ZESA outages &bull; 100% diesel burn
+                $88,000 CAPEX &bull; ~$29,000 annual solar value &bull; 65% self-consumption
               </span>
             </div>
             <div className="border-t md:border-t-0 md:border-l border-stone-800 print:border-stone-300 md:pl-4">
               <span className="text-[#FFC72C] print:text-amber-700 block text-[11px] font-mono">Combined Solar + Automation</span>
-              <span className="text-emerald-400 print:text-emerald-700 font-black text-sm block mt-0.5">1.2 Years Payback</span>
+              <span className="text-emerald-400 print:text-emerald-700 font-black text-sm block mt-0.5">~2.2 Years Payback</span>
               <span className="text-stone-400 print:text-stone-600 text-[11px] block mt-1">
-                90% self-consumption &bull; Safe hybrid microgrid outage sync &bull; 25–40% ZESA reduction
+                $323,000 Total Investment ($88k + $235k) &bull; 90% direct solar use &bull; ~$150,000/yr value
               </span>
             </div>
             <div className="border-t md:border-t-0 md:border-l border-stone-800 print:border-stone-300 md:pl-4 font-mono">
-              <span className="text-stone-400 print:text-stone-600 block text-[11px] font-sans">Synergy Breakdown</span>
+              <span className="text-stone-400 print:text-stone-600 block text-[11px] font-sans">Synergy Breakdown (220 kWp / 411 MWh)</span>
               <div className="mt-1 space-y-0.5 text-[11px] text-stone-300 print:text-stone-700">
-                <div className="flex justify-between"><span>Self-Consumption:</span><span className="text-emerald-400 print:text-emerald-700 font-bold">+$21,197/yr</span></div>
-                <div className="flex justify-between"><span>Diesel Reduction:</span><span className="text-emerald-400 print:text-emerald-700 font-bold">+$84,863/yr</span></div>
-                <div className="flex justify-between"><span>Carbon &amp; Premium:</span><span className="text-emerald-400 print:text-emerald-700 font-bold">+$54,660/yr</span></div>
+                <div className="flex justify-between"><span>Extra Direct Solar Use:</span><span className="text-emerald-400 print:text-emerald-700 font-bold">+$14,640/yr</span></div>
+                <div className="flex justify-between"><span>Diesel Displacement:</span><span className="text-emerald-400 print:text-emerald-700 font-bold">$25k&ndash;$40k/yr</span></div>
+                <div className="flex justify-between"><span>Carbon Credits (329 tCO₂):</span><span className="text-emerald-400 print:text-emerald-700 font-bold">$4,935&ndash;$9,870/yr</span></div>
               </div>
             </div>
           </div>

@@ -39,6 +39,7 @@ import {
   Tooltip as RechartsTooltip,
   Legend
 } from 'recharts';
+import { RoiDisclaimerBanner } from './RoiDisclaimerBanner';
 
 interface ParameterTooltipProps {
   text: string;
@@ -85,7 +86,7 @@ export const ControlRoom: React.FC = () => {
   const [deadlineDays, setDeadlineDays] = useState<number>(14);
 
   // Energy Inputs
-  const [solarKw, setSolarKw] = useState<number>(650);
+  const [solarKw, setSolarKw] = useState<number>(154); // 154 kW default (70% of 220 kW rated Bulawayo array)
   const [gridAvailable, setGridAvailable] = useState<boolean>(true);
 
   // AI Vision Forecast Interactive Sliders & Inputs
@@ -240,7 +241,7 @@ export const ControlRoom: React.FC = () => {
     setMonthlyTarget(24000);
     setOrderSizeM2(2000);
     setDeadlineDays(14);
-    setSolarKw(650);
+    setSolarKw(154); // 154 kW default (70% of 220 kW rated)
     setGridAvailable(true);
     setPowerCutActive(false);
     setCameraConfidence(96);
@@ -261,7 +262,7 @@ export const ControlRoom: React.FC = () => {
     setMonthlyTarget(26000);
     setOrderSizeM2(3500);
     setDeadlineDays(18);
-    setSolarKw(850);
+    setSolarKw(154); // 154 kW (70% rated default for 220 kW system)
     setGridAvailable(true);
     setPowerCutActive(false);
     setCameraConfidence(98);
@@ -311,6 +312,9 @@ export const ControlRoom: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* ROI & Transformation Value Disclaimer Banner */}
+      <RoiDisclaimerBanner />
 
       {/* Main Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

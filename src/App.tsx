@@ -78,7 +78,7 @@ const TABS: TabItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
   { id: 'risk-dashboard', label: 'Risk Dashboard', icon: ShieldAlert, badge: 'Site Assessment' },
   { id: 'pricing-roi', label: 'Pricing & ROI', icon: DollarSign, badge: 'MD Justification' },
-  { id: 'solar-synergy', label: 'Solar + Synergy', icon: SunMedium, badge: '1 MW Tender' },
+  { id: 'solar-synergy', label: 'Solar + Synergy', icon: SunMedium, badge: 'Tender SPV/001' },
   { id: 'control-room', label: 'Control Room', icon: Sliders, badge: 'Dynamic' },
   { id: 'what-if', label: 'What-If Simulator', icon: Cpu, badge: '5 Scenarios' },
   { id: 'safety', label: 'Safety Officer', icon: ShieldCheck },

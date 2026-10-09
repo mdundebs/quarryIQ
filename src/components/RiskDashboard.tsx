@@ -47,6 +47,11 @@ import {
   RiskParameterItem,
   Risk24hPoint
 } from '../mockData';
+import {
+  RoiDisclaimerBanner,
+  RoiTooltipBadge,
+  ROI_TOOLTIP_TEXT
+} from './RoiDisclaimerBanner';
 
 // Preset configurations for interactive demo
 interface DemoPreset {
@@ -540,6 +545,8 @@ export const RiskDashboard: React.FC = () => {
       </div>
 
       {/* 2. Top "Risk Score" Widget (0 - 100 with color coding) */}
+      <RoiDisclaimerBanner />
+
       <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           {/* Circular / Arc Risk Gauge (col-span-5) */}
@@ -965,17 +972,19 @@ export const RiskDashboard: React.FC = () => {
                 <div>
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 block">
-                      Prevented by SitePlan AI
+                      <RoiTooltipBadge text={ROI_TOOLTIP_TEXT}>
+                        Estimated Prevention Value
+                      </RoiTooltipBadge>
                     </span>
                     <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
                       {systemPreventionPercent}% Saved
                     </span>
                   </div>
-                  <div className="text-3xl font-black font-mono text-emerald-700 mt-2">
+                  <div className="text-3xl font-black font-mono text-emerald-700 mt-2" title={ROI_TOOLTIP_TEXT}>
                     +${preventedRiskCost.toLocaleString()}
                   </div>
                   <span className="text-[11px] text-emerald-800/80 mt-1 block">
-                    Annual net cost avoided through early alert
+                    Estimated annual business value preserved through telemetry
                   </span>
                 </div>
                 <div className="mt-4 pt-3 border-t border-emerald-500/30 text-[10px] text-emerald-800 font-semibold flex items-center justify-between">
