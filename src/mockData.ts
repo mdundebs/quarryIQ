@@ -8,6 +8,41 @@ export interface HourlyTelemetry {
   costPerTon: number;
 }
 
+export interface HourlyPlantLoad {
+  time: string;
+  solarKw: number;
+  gridKw: number;
+  dieselKw: number;
+  totalLoadKw: number;
+}
+
+export const DAILY_PLANT_LOAD_DATA: HourlyPlantLoad[] = [
+  { time: '00:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '01:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '02:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '03:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '04:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '05:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '06:00', solarKw: 20, gridKw: 300, dieselKw: 0, totalLoadKw: 320 },
+  { time: '07:00', solarKw: 60, gridKw: 280, dieselKw: 0, totalLoadKw: 340 },
+  { time: '08:00', solarKw: 110, gridKw: 230, dieselKw: 0, totalLoadKw: 340 },
+  { time: '09:00', solarKw: 150, gridKw: 200, dieselKw: 0, totalLoadKw: 350 },
+  { time: '10:00', solarKw: 180, gridKw: 170, dieselKw: 0, totalLoadKw: 350 },
+  { time: '11:00', solarKw: 205, gridKw: 145, dieselKw: 0, totalLoadKw: 350 },
+  { time: '12:00', solarKw: 220, gridKw: 130, dieselKw: 0, totalLoadKw: 350 },
+  { time: '13:00', solarKw: 215, gridKw: 135, dieselKw: 0, totalLoadKw: 350 },
+  { time: '14:00', solarKw: 180, gridKw: 160, dieselKw: 0, totalLoadKw: 340 },
+  { time: '15:00', solarKw: 140, gridKw: 200, dieselKw: 0, totalLoadKw: 340 },
+  { time: '16:00', solarKw: 90, gridKw: 230, dieselKw: 0, totalLoadKw: 320 },
+  { time: '17:00', solarKw: 40, gridKw: 280, dieselKw: 0, totalLoadKw: 320 },
+  { time: '18:00', solarKw: 10, gridKw: 290, dieselKw: 0, totalLoadKw: 300 },
+  { time: '19:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '20:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '21:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '22:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+  { time: '23:00', solarKw: 0, gridKw: 300, dieselKw: 0, totalLoadKw: 300 },
+];
+
 export interface StockpileItem {
   id: string;
   name: string;

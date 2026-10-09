@@ -18,16 +18,15 @@ import {
 import {
   AreaChart,
   Area,
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend
+  Legend,
+  Line
 } from 'recharts';
-import { HOURLY_TELEMETRY, STOCKPILES } from '../mockData';
+import { DAILY_PLANT_LOAD_DATA, HOURLY_TELEMETRY, STOCKPILES } from '../mockData';
 
 interface DashboardProps {
   liveDataEnabled?: boolean;
@@ -347,23 +346,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-base font-bold text-stone-900">
-                Crushing Power Mix (kW)
+                Crushing Power Mix — Daily Load vs Sources
               </h3>
               <p className="text-xs text-stone-500 mt-0.5">
-                Solar PV displacement of national grid power during shift
+                Solar PV (220 kW rated) displaces up to 220 kW of grid draw during peak daylight hours. The remainder of the plant load is supplied by ZESA, with diesel backup during grid outages.
               </p>
             </div>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
-              220 kW Solar Peak
-            </span>
           </div>
 
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={HOURLY_TELEMETRY} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <AreaChart data={DAILY_PLANT_LOAD_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1efe7" />
-                <XAxis dataKey="time" stroke="#8c8a82" fontSize={11} tickLine={false} />
-                <YAxis stroke="#8c8a82" fontSize={11} tickLine={false} />
+                <XAxis dataKey="time" stroke="#8c8a82" fontSize={11} tickLine={false} label={{ value: 'Time of Day', position: 'insideBottom', offset: -5, fontSize: 12 }} />
+                <YAxis stroke="#8c8a82" fontSize={11} tickLine={false} domain={[0, 600]} label={{ value: 'Plant Load (kW)', angle: -90, position: 'insideLeft', fontSize: 12 }} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#0B0B0F',
@@ -377,10 +373,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
                   wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }}
                   iconType="circle"
                 />
-                <Bar dataKey="solarKw" name="Solar PV (kW)" stackId="a" fill="#FFC72C" />
-                <Bar dataKey="gridKw" name="Utility Grid (kW)" stackId="a" fill="#3B82F6" />
-                <Bar dataKey="dieselKw" name="Diesel Genset (kW)" stackId="a" fill="#EF4444" />
-              </BarChart>
+                <Area type="monotone" dataKey="solarKw" name="Solar PV (220 kW rated)" stackId="a" fill="#FFC72C" stroke="#FFC72C" />
+                <Area type="monotone" dataKey="gridKw" name="Utility Grid (ZESA)" stackId="a" fill="#3B82F6" stroke="#3B82F6" />
+                <Area type="monotone" dataKey="dieselKw" name="Diesel Genset (backup)" stackId="a" fill="#EF4444" stroke="#EF4444" />
+                <Line type="monotone" dataKey="totalLoadKw" name="Total Plant Demand" stroke="#000000" strokeWidth={2} dot={false} />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
