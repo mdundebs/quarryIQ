@@ -7,6 +7,7 @@ import {
   Droplets,
   CloudLightning,
   Radio,
+  Sun,
   AlertTriangle,
   CheckCircle2,
   AlertCircle,
@@ -142,6 +143,11 @@ export const RiskDashboard: React.FC = () => {
   // Live parameters state
   const [params, setParams] = useState(INITIAL_RISK_PARAMETERS);
   const [activePreset, setActivePreset] = useState<string>('custom');
+
+  // Solar generation state (220 kW rated max reference)
+  const [solarKwRisk, setSolarKwRisk] = useState<number>(154); // Default 154 kW (70% rated)
+  const solarPercentOfRated = ((solarKwRisk / 220) * 100).toFixed(1);
+  const isSolarLow = solarKwRisk < 66; // < 30% of 220 kW rated (66 kW)
 
   // Risk Mitigation Calculator state
   const [downtimeCostPerEvent, setDowntimeCostPerEvent] = useState<number>(18500); // $X
@@ -546,6 +552,105 @@ export const RiskDashboard: React.FC = () => {
 
       {/* 2. Top "Risk Score" Widget (0 - 100 with color coding) */}
       <RoiDisclaimerBanner />
+
+      {/* Solar Generation & Fleet Status Widget (Max 220 kW Rated) */}
+      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-stone-200">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600">
+              <Sun className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                  Bulawayo Fleet Solar Telemetry
+                </span>
+                <span className="text-xs font-mono text-stone-500">Rated Max: 220 kW</span>
+              </div>
+              <h3 className="text-xl font-black text-stone-900 mt-0.5">
+                Solar PV Generation &amp; Capacity Status
+              </h3>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSolarKwRisk(154)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                solarKwRisk === 154 ? 'bg-[#FFC72C] text-[#0B0B0F] border-[#FFC72C]' : 'bg-stone-100 text-stone-700 border-stone-200 hover:bg-stone-200'
+              }`}
+            >
+              154 kW (70%)
+            </button>
+            <button
+              onClick={() => setSolarKwRisk(220)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                solarKwRisk === 220 ? 'bg-[#FFC72C] text-[#0B0B0F] border-[#FFC72C]' : 'bg-stone-100 text-stone-700 border-stone-200 hover:bg-stone-200'
+              }`}
+            >
+              220 kW (100%)
+            </button>
+            <button
+              onClick={() => setSolarKwRisk(44)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                solarKwRisk === 44 ? 'bg-amber-600 text-white border-amber-600' : 'bg-stone-100 text-stone-700 border-stone-200 hover:bg-stone-200'
+              }`}
+            >
+              44 kW (20% Low)
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 items-center">
+          <div className="p-5 rounded-xl bg-stone-50 border border-stone-200 flex flex-col justify-between">
+            <span className="text-xs text-stone-500 font-semibold uppercase">Current Generation Output</span>
+            <div className="flex items-baseline gap-2 mt-2">
+              <span className="text-3xl font-black text-stone-900 font-mono">{solarKwRisk}</span>
+              <span className="text-sm font-semibold text-stone-500">kW</span>
+            </div>
+            <div className="mt-2 text-xs font-bold font-mono text-amber-800 bg-amber-100/80 px-2 py-0.5 rounded inline-block w-fit">
+              {solarPercentOfRated}% of 220 kW Rated Max
+            </div>
+          </div>
+
+          <div className="p-5 rounded-xl bg-stone-50 border border-stone-200 flex flex-col justify-between">
+            <span className="text-xs text-stone-500 font-semibold uppercase">Capacity Utilization</span>
+            <div className="w-full bg-stone-200 rounded-full h-3 mt-3 overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-500 ${
+                  Number(solarPercentOfRated) < 30 ? 'bg-amber-500' : 'bg-[#FFC72C]'
+                }`}
+                style={{ width: `${Math.min(Number(solarPercentOfRated), 100)}%` }}
+              ></div>
+            </div>
+            <div className="mt-3 flex justify-between text-[11px] text-stone-500 font-mono">
+              <span>0 kW (0%)</span>
+              <span className="text-stone-900 font-bold">Threshold: 66 kW (30%)</span>
+              <span>220 kW (100%)</span>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-xl bg-stone-900 text-white flex flex-col justify-between">
+            <span className="text-xs text-stone-400 font-semibold uppercase">Microgrid Status</span>
+            <div className="text-sm font-bold text-white mt-2">
+              {isSolarLow ? '⚠️ Low Solar Output (<30% Rated)' : '✅ Optimal Solar Inverter Feed'}
+            </div>
+            <span className="text-[11px] text-stone-300 mt-1">
+              {isSolarLow
+                ? 'Generation below 66 kW threshold. Tier-4 generator supporting residual plant load.'
+                : 'Array operating efficiently with zero inverter clipping.'}
+            </span>
+          </div>
+        </div>
+
+        {isSolarLow && (
+          <div className="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />
+            <div>
+              <strong>Low Solar Output Warning:</strong> Solar generation is currently at <strong>{solarKwRisk} kW ({solarPercentOfRated}% of 220 kW rated max)</strong>, which is below the <strong>30% (66 kW)</strong> operational threshold. Microgrid controller has automatically engaged standby diesel generator support to maintain plant throughput.
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">

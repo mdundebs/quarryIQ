@@ -26,17 +26,17 @@ export const BULAWAYO_CAPACITY_KWP = 220;
 export const BULAWAYO_PANELS = 367;
 export const BULAWAYO_ANNUAL_MWH = 411; // 220 kWp * 1,868 kWh/kWp = 410,960 kWh ≈ 411 MWh
 export const BULAWAYO_DAILY_AVG_KWH = 1126; // ~1,126 kWh/day
-export const BULAWAYO_CAPEX_USD = 88000;
+export const BULAWAYO_CAPEX_USD = 160000; // Bulawayo solar installation price — final commercial figure
 export const BULAWAYO_CO2_TONNES = 329; // 411 MWh * 0.8 tCO2/MWh = ~329 tonnes/year
 export const BULAWAYO_CARBON_CREDIT_MIN_USD = 4935; // At $15/t = $4,935/yr
 export const BULAWAYO_CARBON_CREDIT_MAX_USD = 9870; // At $30/t = $9,870/yr
 export const BULAWAYO_DIESEL_SAVINGS_MIN_USD = 25000;
 export const BULAWAYO_DIESEL_SAVINGS_MAX_USD = 40000;
 export const BULAWAYO_SOLAR_ALONE_ANNUAL_USD = 29000;
-export const BULAWAYO_SOLAR_ALONE_PAYBACK_YRS = 3.0; // $88,000 / $29,000 = 3.0 yrs
-export const BULAWAYO_COMBINED_INVESTMENT_USD = 323000; // $88k solar + $235k automation
+export const BULAWAYO_SOLAR_ALONE_PAYBACK_YRS = 5.5; // $160,000 / $29,000 = 5.5 yrs
+export const BULAWAYO_COMBINED_INVESTMENT_USD = 395000; // $160k solar + $235k automation
 export const BULAWAYO_COMBINED_ANNUAL_USD = 150000; // conservative combined value
-export const BULAWAYO_COMBINED_PAYBACK_YRS = 2.2; // $323,000 / $150,000 = 2.2 yrs
+export const BULAWAYO_COMBINED_PAYBACK_YRS = 2.6; // $395,000 / $150,000 = 2.6 yrs
 export const BULAWAYO_LAND_HA = 0.35;
 
 export const HARARE_CAPACITY_KWP_MIN = 250;
@@ -72,7 +72,7 @@ export const SOLAR_SITES: Record<string, SiteSolarConfig> = {
     co2AvoidedTonnes: BULAWAYO_CO2_TONNES,
     co2AvoidedLabel: '~329 tonnes/year',
     capexUsd: BULAWAYO_CAPEX_USD,
-    capexLabel: '~$88,000',
+    capexLabel: '~$160,000',
     landAreaHa: BULAWAYO_LAND_HA,
     landAreaLabel: '~0.35 hectares',
     description: 'Primary deployment proving automated microgrid load-shifting, diesel avoidance, and tariff peak clipping.'

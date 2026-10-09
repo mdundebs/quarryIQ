@@ -345,8 +345,11 @@ export const SolarEnergy: React.FC = () => {
               <span className="text-xs text-stone-400 font-mono">1,868 kWh/kWp specific yield</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
-              Financial Return &amp; Payback Architecture
+              Solar PV System — 220 kW
             </h3>
+            <div className="text-xs font-bold font-mono text-amber-300 mt-0.5">
+              Total Installed Value: $160,000
+            </div>
             <p className="text-xs text-stone-300 mt-1 max-w-2xl leading-relaxed">
               Standardized on Bulawayo site reference: 220 kWp capacity, 411 MWh annual output (~1,126 kWh/day), and tariff benchmark of $0.1421/kWh.
             </p>
@@ -354,13 +357,13 @@ export const SolarEnergy: React.FC = () => {
           <div className="flex items-center gap-3">
             <div className="p-3 bg-stone-800/80 rounded-xl border border-stone-700 text-right">
               <span className="text-[10px] text-stone-400 uppercase font-bold block">Solar Alone Payback</span>
-              <span className="text-2xl font-black text-[#FFC72C] font-mono">~3.0 yrs</span>
-              <span className="text-[10px] text-stone-400 block">$88k Capex / ~$29k Value</span>
+              <span className="text-2xl font-black text-[#FFC72C] font-mono">~5.5 yrs</span>
+              <span className="text-[10px] text-stone-400 block">$160k Capex / ~$29k Value</span>
             </div>
             <div className="p-3 bg-emerald-950/60 rounded-xl border border-emerald-500/40 text-right">
               <span className="text-[10px] text-emerald-400 uppercase font-bold block">Solar + Auto Payback</span>
-              <span className="text-2xl font-black text-emerald-400 font-mono">~2.2 yrs</span>
-              <span className="text-[10px] text-emerald-300/80 block">$323k Total / ~$150k Value</span>
+              <span className="text-2xl font-black text-emerald-400 font-mono">~2.6 yrs</span>
+              <span className="text-[10px] text-emerald-300/80 block">$395k Total / ~$150k Value</span>
             </div>
           </div>
         </div>
@@ -424,10 +427,10 @@ export const SolarEnergy: React.FC = () => {
               ~$150,000 <span className="text-xs text-stone-400 font-normal">/ yr</span>
             </div>
             <div className="text-xs text-stone-300 mt-1">
-              Total Capex: <strong className="text-white font-mono">$323,000</strong>
+              Total Capex: <strong className="text-white font-mono">$395,000</strong>
             </div>
             <div className="mt-3 pt-2.5 border-t border-stone-700/80 text-[11px] text-stone-400">
-              $88k Solar + $235k QuarryIQ. Conservative payback ~2.2 years across entire transformation.
+              $160k Solar + $235k QuarryIQ. Conservative payback ~2.6 years across entire transformation.
             </div>
           </div>
         </div>

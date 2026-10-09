@@ -649,7 +649,7 @@ export const PricingROI: React.FC = () => {
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-stone-500 mt-1">
-              How QuarryIQ automation amplifies the planned <strong>solar installation (~220 kWp Bulawayo PoC + Harare expansion)</strong>, accelerating payback from <strong>3.7 years down to 1.2 years</strong>.
+              How QuarryIQ automation amplifies the planned <strong>solar installation (~220 kWp Bulawayo PoC + Harare expansion)</strong>, accelerating payback from <strong>5.5 years down to 2.6 years</strong>.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -665,7 +665,7 @@ export const PricingROI: React.FC = () => {
           <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 space-y-2.5">
             <div className="flex items-center justify-between">
               <span className="font-bold text-stone-800 text-sm">Solar Without Automation (Standalone PV)</span>
-              <span className="text-xs font-mono font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">3.7 Yr Payback</span>
+              <span className="text-xs font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">5.5 Yr Payback</span>
             </div>
             <ul className="text-xs text-stone-600 space-y-1.5 list-disc pl-4">
               <li><strong>Self-Consumption:</strong> 65% (35% mid-day solar dumped to grid)</li>
@@ -679,7 +679,7 @@ export const PricingROI: React.FC = () => {
           <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-2.5">
             <div className="flex items-center justify-between">
               <span className="font-bold text-emerald-950 text-sm">Solar With Automation (QuarryIQ Hybrid)</span>
-              <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">1.2 Yr Payback</span>
+              <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">2.6 Yr Payback</span>
             </div>
             <ul className="text-xs text-stone-700 space-y-1.5 list-disc pl-4">
               <li><strong>Self-Consumption:</strong> 90% (+25% gain via kinetic rock storage)</li>
@@ -720,13 +720,87 @@ export const PricingROI: React.FC = () => {
               Tender SPV/001/2026 Strategic Alignment &bull; Multi-Site Rollout
             </span>
             <p className="text-stone-300 mt-0.5">
-              Automation is <strong>COMPLEMENTARY</strong> to the solar tender, not competitive. Phase 1 proves ~220 kWp at Bulawayo (CAPEX ~$88k), unlocking streamlined scale across Harare (~250–350 kWp) and Marondera.
+              Automation is <strong>COMPLEMENTARY</strong> to the solar tender, not competitive. Phase 1 proves ~220 kWp at Bulawayo (CAPEX ~$160k), unlocking streamlined scale across Harare (~250–350 kWp) and Marondera.
             </p>
           </div>
           <div className="text-right shrink-0">
             <span className="text-xs text-stone-400 block">Total Added to Solar Capex:</span>
             <span className="text-xl font-black font-mono text-[#FFC72C]">+$160,720 / year</span>
           </div>
+        </div>
+      </div>
+
+      {/* 5. Bulawayo 5-Year Value Projection ($160k Solar Reference) */}
+      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-stone-200">
+          <div>
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-emerald-600" />
+              <h2 className="text-xl font-bold text-stone-900">
+                5. Bulawayo 5-Year Value Projection ($160k Solar Reference)
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-stone-500 mt-1">
+              Cumulative financial return comparison between Solar Alone ($160k CAPEX) vs. Combined Solar + Automation ($395,000 Total Investment).
+            </p>
+          </div>
+          <div className="text-xs px-3 py-1 rounded-lg bg-emerald-50 text-emerald-800 font-bold border border-emerald-200 font-mono">
+            Combined 5-Yr Return: ~2.0x ($800k Value / $395k Invest)
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm border-collapse font-mono">
+            <thead>
+              <tr className="border-b border-stone-200 text-stone-500 text-xs uppercase tracking-wider bg-stone-50">
+                <th className="py-3 px-4 font-semibold">Year</th>
+                <th className="py-3 px-4 font-semibold text-right">Solar Alone (Standalone)</th>
+                <th className="py-3 px-4 font-semibold text-right">Solar + Automation (Hybrid)</th>
+                <th className="py-3 px-4 font-semibold text-right">Difference (Uplift)</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-100 text-xs sm:text-sm">
+              <tr>
+                <td className="py-3.5 px-4 font-bold text-stone-900">1</td>
+                <td className="py-3.5 px-4 text-right text-stone-700">$29,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-700 font-bold">$150,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-600 font-bold">+$121,000</td>
+              </tr>
+              <tr>
+                <td className="py-3.5 px-4 font-bold text-stone-900">2</td>
+                <td className="py-3.5 px-4 text-right text-stone-700">$30,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-700 font-bold">$155,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-600 font-bold">+$125,000</td>
+              </tr>
+              <tr>
+                <td className="py-3.5 px-4 font-bold text-stone-900">3</td>
+                <td className="py-3.5 px-4 text-right text-stone-700">$31,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-700 font-bold">$160,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-600 font-bold">+$129,000</td>
+              </tr>
+              <tr>
+                <td className="py-3.5 px-4 font-bold text-stone-900">4</td>
+                <td className="py-3.5 px-4 text-right text-stone-700">$32,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-700 font-bold">$165,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-600 font-bold">+$133,000</td>
+              </tr>
+              <tr>
+                <td className="py-3.5 px-4 font-bold text-stone-900">5</td>
+                <td className="py-3.5 px-4 text-right text-stone-700">$33,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-700 font-bold">$170,000</td>
+                <td className="py-3.5 px-4 text-right text-emerald-600 font-bold">+$137,000</td>
+              </tr>
+              <tr className="bg-stone-900 text-white font-bold">
+                <td className="py-4 px-4">Total</td>
+                <td className="py-4 px-4 text-right text-stone-200">$155,000</td>
+                <td className="py-4 px-4 text-right text-[#FFC72C]">$800,000</td>
+                <td className="py-4 px-4 text-right text-emerald-400">+$645,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="text-xs text-stone-500 font-sans">
+          <strong>Note:</strong> Combined investment $395,000 with cumulative 5-year value $800,000 = ~2.0x return over 5 years.
         </div>
       </div>
 
@@ -1045,16 +1119,16 @@ export const PricingROI: React.FC = () => {
           <div className="p-4 rounded-xl bg-white/5 border border-white/10 print:bg-stone-100/70 print:border-stone-300 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             <div>
               <span className="text-stone-400 print:text-stone-600 block text-[11px] font-mono">Bulawayo Phase 1 Solar Standalone</span>
-              <span className="text-amber-400 print:text-amber-700 font-bold block mt-0.5">~3.0 Years Payback</span>
+              <span className="text-amber-400 print:text-amber-700 font-bold block mt-0.5">~5.5 Years Payback</span>
               <span className="text-stone-400 print:text-stone-600 text-[11px] block mt-1">
-                $88,000 CAPEX &bull; ~$29,000 annual solar value &bull; 65% self-consumption
+                $160,000 CAPEX &bull; ~$29,000 annual solar value &bull; 65% self-consumption
               </span>
             </div>
             <div className="border-t md:border-t-0 md:border-l border-stone-800 print:border-stone-300 md:pl-4">
               <span className="text-[#FFC72C] print:text-amber-700 block text-[11px] font-mono">Combined Solar + Automation</span>
-              <span className="text-emerald-400 print:text-emerald-700 font-black text-sm block mt-0.5">~2.2 Years Payback</span>
+              <span className="text-emerald-400 print:text-emerald-700 font-black text-sm block mt-0.5">~2.6 Years Payback</span>
               <span className="text-stone-400 print:text-stone-600 text-[11px] block mt-1">
-                $323,000 Total Investment ($88k + $235k) &bull; 90% direct solar use &bull; ~$150,000/yr value
+                $395,000 Total Investment ($160k + $235k) &bull; 90% direct solar use &bull; ~$150,000/yr value
               </span>
             </div>
             <div className="border-t md:border-t-0 md:border-l border-stone-800 print:border-stone-300 md:pl-4 font-mono">

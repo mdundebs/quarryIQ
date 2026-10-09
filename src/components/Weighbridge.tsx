@@ -14,6 +14,7 @@ import {
   Scale
 } from 'lucide-react';
 import { WEIGHBRIDGE_TRUCKS, WeighbridgeTruck } from '../mockData';
+import { RoiDisclaimerBanner } from './RoiDisclaimerBanner';
 
 export const Weighbridge: React.FC = () => {
   const [trucks, setTrucks] = useState<WeighbridgeTruck[]>(WEIGHBRIDGE_TRUCKS);
@@ -27,6 +28,9 @@ export const Weighbridge: React.FC = () => {
 
   return (
     <div className="space-y-8">
+      {/* DISCLAIMER BANNER */}
+      <RoiDisclaimerBanner />
+
       {/* Top Banner: Phase 2 Vision & Commercial Benefit */}
       <div className="bg-white rounded-xl border border-stone-200/90 p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
@@ -36,7 +40,7 @@ export const Weighbridge: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-[#FFC72C] text-[#0B0B0F]">
-                Phase 2 Automation Preview
+                Phase 2 &bull; Weighbridge Intelligence
               </span>
               <span className="text-xs text-stone-500 font-mono">Zero Operator In-Loop</span>
             </div>
@@ -53,6 +57,63 @@ export const Weighbridge: React.FC = () => {
           <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs">
             <span className="text-emerald-800 font-semibold block">Avg Turnaround Time</span>
             <span className="text-lg font-black text-emerald-900 font-mono">42 Seconds</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Traceability & Green Premium Summary Card */}
+      <div className="bg-stone-900 text-white rounded-2xl p-6 sm:p-8 border border-stone-800 shadow-xl space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-stone-800 gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-[#FFC72C] text-[#0B0B0F]">
+                Traceability &amp; Green Premium Attribution
+              </span>
+            </div>
+            <h3 className="text-xl font-black text-white mt-1">
+              Low-Carbon Production &amp; Leakage Defense
+            </h3>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-stone-800 rounded-xl border border-stone-700 text-right font-mono">
+              <span className="text-[10px] text-stone-400 uppercase font-bold block">Combined Total Investment</span>
+              <span className="text-xl font-black text-[#FFC72C]">~$420,800</span>
+              <span className="text-[10px] text-stone-400 block">$160k Solar + $235k Auto + $25.8k WB</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm">
+          <div className="p-4 rounded-xl bg-stone-800/60 border border-stone-700 space-y-2">
+            <span className="text-amber-400 font-bold uppercase font-mono text-xs block">
+              1. Traceability Narrative
+            </span>
+            <p className="text-stone-300 leading-relaxed text-xs">
+              "Every slab is traced from pit to dispatch. The energy used in production is logged — solar contributes up to 220 kW during daylight hours, with the grid covering the rest. This traceability enables green premium pricing and carbon credit registration."
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-stone-800/60 border border-stone-700 space-y-2">
+            <span className="text-emerald-400 font-bold uppercase font-mono text-xs block">
+              2. Green Premium &amp; Carbon Offsets
+            </span>
+            <ul className="text-stone-300 space-y-1 text-xs">
+              <li>&bull; <strong>Green Premium:</strong> $50,400/yr (7% export premium via low-carbon production enabled by 220 kW solar PV + grid).</li>
+              <li>&bull; <strong>Carbon Offset:</strong> ~329 tonnes CO₂/yr (~$4,935 &ndash; $9,870/yr credit value).</li>
+            </ul>
+          </div>
+
+          <div className="p-4 rounded-xl bg-stone-800/60 border border-stone-700 space-y-2">
+            <span className="text-rose-400 font-bold uppercase font-mono text-xs block">
+              3. Fraud Prevention Leakage Defense
+            </span>
+            <ul className="text-stone-300 space-y-1 text-xs">
+              <li>&bull; Fake tickets: $10k–$20k/yr</li>
+              <li>&bull; Weight manipulation: $15k–$25k/yr</li>
+              <li>&bull; Unauthorized dispatch: $5k–$15k/yr</li>
+              <li>&bull; Product substitution: $10k–$20k/yr</li>
+              <li>&bull; <strong>Total Leakage Defended: $40k–$80k/yr</strong></li>
+            </ul>
           </div>
         </div>
       </div>

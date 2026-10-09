@@ -106,14 +106,14 @@ export const SolarSynergy: React.FC = () => {
   const tenderEconomics = {
     tenderRef: 'Davis Granite Tender SPV/001/2026',
     tenderScope: 'Solar PV Fleet Rollout (Phase 1 Bulawayo ~220 kWp PoC + Phase 2 Harare Expansion)',
-    solarAloneCapex: 88000, // Bulawayo Phase 1 PoC capex
-    solarAloneAnnualSavings: 23800,
-    solarAlonePaybackYears: 3.7,
+    solarAloneCapex: BULAWAYO_CAPEX_USD, // Bulawayo Phase 1 PoC capex ($160,000)
+    solarAloneAnnualSavings: 29000,
+    solarAlonePaybackYears: 5.5,
     automationCapex: 235000, // Option B recommended
     automationBaselineValue: 247000,
-    combinedCapex: 323000, // $88k + $235k
-    combinedAnnualSavings: 431520, // $23.8k + $160.7k synergy + $247k plant risk value
-    combinedPaybackYears: 1.2
+    combinedCapex: 395000, // $160k solar + $235k automation
+    combinedAnnualSavings: 431520,
+    combinedPaybackYears: 2.6
   };
 
   const paybackComparisonData = [
@@ -122,14 +122,14 @@ export const SolarSynergy: React.FC = () => {
       investment: tenderEconomics.solarAloneCapex,
       paybackYears: tenderEconomics.solarAlonePaybackYears,
       annualBenefit: tenderEconomics.solarAloneAnnualSavings,
-      note: '3.7 Years Payback'
+      note: '5.5 Years Payback'
     },
     {
       name: 'Combined Solar + Automation',
       investment: tenderEconomics.combinedCapex,
       paybackYears: tenderEconomics.combinedPaybackYears,
       annualBenefit: tenderEconomics.solarAloneAnnualSavings + synergyData.totalAddedAnnualValue + tenderEconomics.automationBaselineValue,
-      note: '1.2 Years Payback'
+      note: '2.6 Years Payback'
     }
   ];
 
@@ -644,12 +644,12 @@ export const SolarSynergy: React.FC = () => {
             <div className="flex items-center gap-4 bg-white/5 border border-white/10 p-3.5 rounded-xl">
               <div className="text-center px-3 border-r border-stone-700">
                 <span className="text-[10px] text-stone-400 block uppercase" title={ROI_TOOLTIP_TEXT}>Solar Alone</span>
-                <span className="text-2xl font-black font-mono text-rose-400" title={ROI_TOOLTIP_TEXT}>3.7 yrs</span>
+                <span className="text-2xl font-black font-mono text-amber-400" title={ROI_TOOLTIP_TEXT}>5.5 yrs</span>
               </div>
               <ArrowRight className="w-5 h-5 text-[#FFC72C]" />
               <div className="text-center px-3">
                 <span className="text-[10px] text-[#FFC72C] block uppercase font-bold" title={ROI_TOOLTIP_TEXT}>Combined System</span>
-                <span className="text-3xl font-black font-mono text-emerald-400" title={ROI_TOOLTIP_TEXT}>1.2 yrs</span>
+                <span className="text-3xl font-black font-mono text-emerald-400" title={ROI_TOOLTIP_TEXT}>2.6 yrs</span>
               </div>
             </div>
           </div>
@@ -666,7 +666,7 @@ export const SolarSynergy: React.FC = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#292524" horizontal={false} />
                   <XAxis
                     type="number"
-                    domain={[0, 4.5]}
+                    domain={[0, 6.5]}
                     tick={{ fill: '#a8a29e', fontSize: 11 }}
                     tickFormatter={(v) => `${v} yrs`}
                   />
@@ -725,7 +725,7 @@ export const SolarSynergy: React.FC = () => {
               <div className="pt-2 border-t border-stone-800 flex justify-between items-center text-sm">
                 <span className="font-sans font-bold text-white">Resulting Net Payback:</span>
                 <span className="font-black font-mono text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/40">
-                  1.2 Years
+                  2.6 Years
                 </span>
               </div>
             </div>
@@ -745,7 +745,7 @@ export const SolarSynergy: React.FC = () => {
           <span className="text-xs text-stone-500 font-mono">Section Ref: DG-SOLAR-SYN-2026</span>
         </div>
         <p className="text-xs sm:text-sm text-stone-700 leading-relaxed">
-          Davis Granite should proceed with the procurement of <strong>Tender SPV/001/2026 (Phase 1 Bulawayo ~220 kWp Proof of Concept)</strong> and simultaneously approve <strong>Option B of QuarryIQ Automation ($235,000)</strong>. Treating these as coordinated investments ensures the solar plant generates value every hour of every day—including during ZESA outages—accelerating overall capital recovery to just <strong>14.4 months (1.2 years)</strong> and generating an extra <strong>$160,720 annually</strong> above the solar EPC's standalone model before scaling to Harare (~250–350 kWp) and Marondera.
+          Davis Granite should proceed with the procurement of <strong>Tender SPV/001/2026 (Phase 1 Bulawayo ~220 kWp Proof of Concept)</strong> and simultaneously approve <strong>Option B of QuarryIQ Automation ($235,000)</strong>. Treating these as coordinated investments ensures the solar plant generates value every hour of every day—including during ZESA outages—accelerating overall capital recovery to just <strong>31 months (2.6 years)</strong> and generating an extra <strong>$160,720 annually</strong> above the solar EPC's standalone model before scaling to Harare (~250–350 kWp) and Marondera.
         </p>
       </div>
     </div>
