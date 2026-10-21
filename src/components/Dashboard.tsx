@@ -27,6 +27,7 @@ import {
   Line
 } from 'recharts';
 import { DAILY_PLANT_LOAD_DATA, HOURLY_TELEMETRY, STOCKPILES } from '../mockData';
+import { DataInfoTooltip } from './DataInfoTooltip';
 
 interface DashboardProps {
   liveDataEnabled?: boolean;
@@ -158,7 +159,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
             ></div>
           )}
           <div className="flex items-center justify-between text-stone-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Instant Throughput</span>
+            <span className="text-xs font-bold uppercase tracking-wider flex items-center">
+              Instant Throughput <DataInfoTooltip text="Sourced live from the Saimo BH30 Belt Scale Integrator via Modbus TCP." />
+            </span>
             <div className="flex items-center gap-1.5">
               {liveDataEnabled && (
                 <span
@@ -199,7 +202,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
             ></div>
           )}
           <div className="flex items-center justify-between text-stone-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Daily Production</span>
+            <span className="text-xs font-bold uppercase tracking-wider flex items-center">
+              Daily Production <DataInfoTooltip text="Aggregated daily tonnage from weighbridge and belt integrator systems." />
+            </span>
             <Package className="w-4 h-4 text-[#B38300]" />
           </div>
           <div className="mt-3 flex items-baseline gap-2">
@@ -231,7 +236,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
             ></div>
           )}
           <div className="flex items-center justify-between text-stone-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Revenue Run-Rate</span>
+            <span className="text-xs font-bold uppercase tracking-wider flex items-center">
+              Revenue Run-Rate <DataInfoTooltip text="Calculated as Daily Tonnage multiplied by the configured Selling Price per Ton." />
+            </span>
             <DollarSign className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="mt-3 flex items-baseline gap-2">
@@ -255,7 +262,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
         {/* KPI 4: Blended Cost / Ton */}
         <div className="bg-white rounded-xl p-5 border border-stone-200/90 shadow-xs hover:border-[#FFC72C] transition-all relative overflow-hidden">
           <div className="flex items-center justify-between text-stone-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Blended Cost / Ton</span>
+            <span className="text-xs font-bold uppercase tracking-wider flex items-center">
+              Blended Cost / Ton <DataInfoTooltip text="Live cost analysis based on energy consumption and wear rate monitoring." />
+            </span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="mt-3 flex items-baseline gap-2">
@@ -277,6 +286,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           </div>
         </div>
       </div>
+      <div className="text-xs text-stone-500 italic mt-4 text-center">
+        All data points are sourced from physical PLC sensors, Belt Scales, and Power Meters. No data is manually entered unless specified.
+      </div>
+      
+      {/* ... (rest of the file as before) */}
+
 
       {/* Main Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

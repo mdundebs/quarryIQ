@@ -31,6 +31,7 @@ import {
   Building2,
   Info
 } from 'lucide-react';
+import { DataInfoTooltip } from './DataInfoTooltip';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -862,6 +863,7 @@ export const RiskDashboard: React.FC = () => {
             iconColor="text-amber-500"
             onValueChange={(val) => updateParamValue('transformerLoad', val)}
             formatTooltip={(val) => `${val}% load`}
+            tooltipText="Calculated as (Actual kVA / 500 kVA Rated Capacity). Sourced from the Power Quality Analyzer."
           />
 
           {/* CARD 2: Power Factor (cos φ) */}
@@ -871,6 +873,7 @@ export const RiskDashboard: React.FC = () => {
             iconColor="text-blue-500"
             onValueChange={(val) => updateParamValue('powerFactor', val)}
             formatTooltip={(val) => `${Number(val).toFixed(2)} cos φ`}
+            tooltipText="Live measurement from the Power Quality Analyzer. Warning triggered if PF > 1.0 CAP."
           />
 
           {/* CARD 3: Motor Insulation Resistance (MΩ) */}
@@ -927,6 +930,7 @@ export const RiskDashboard: React.FC = () => {
             onValueChange={(val) => updateParamValue('gridStability', val)}
             formatTooltip={(val) => `${val} stability`}
           />
+
         </div>
       </div>
 
@@ -1294,6 +1298,7 @@ interface ParameterCardProps {
   isToggle?: boolean;
   onValueChange: (val: number) => void;
   formatTooltip: (val: number | string) => string;
+  tooltipText?: string;
 }
 
 const ParameterCard: React.FC<ParameterCardProps> = ({
@@ -1303,6 +1308,7 @@ const ParameterCard: React.FC<ParameterCardProps> = ({
   isToggle = false,
   onValueChange,
   formatTooltip,
+  tooltipText,
 }) => {
   const statusBadge = useMemo(() => {
     if (item.status === 'critical') {
@@ -1336,8 +1342,8 @@ const ParameterCard: React.FC<ParameterCardProps> = ({
               <Icon className={`w-5 h-5 ${iconColor}`} />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-stone-900 leading-tight">
-                {item.name}
+              <h4 className="text-sm font-bold text-stone-900 leading-tight flex items-center">
+                {item.name} {tooltipText && <DataInfoTooltip text={tooltipText} />}
               </h4>
               <span className="text-[10px] text-stone-500 font-mono">
                 {item.thresholdText}
@@ -1351,6 +1357,7 @@ const ParameterCard: React.FC<ParameterCardProps> = ({
             {statusBadge.text}
           </span>
         </div>
+
 
         {/* Current Value Display */}
         <div className="flex items-baseline justify-between pt-1">

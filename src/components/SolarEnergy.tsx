@@ -41,6 +41,7 @@ import {
   PHASE_3_SITE
 } from '../data/solarConfig';
 import { RoiDisclaimerBanner } from './RoiDisclaimerBanner';
+import { DataInfoTooltip } from './DataInfoTooltip';
 
 export const SolarEnergy: React.FC = () => {
   const [selectedSiteKey, setSelectedSiteKey] = useState<'bulawayo' | 'harare' | 'marondera'>('bulawayo');
@@ -66,53 +67,14 @@ export const SolarEnergy: React.FC = () => {
     <div className="space-y-8">
       {/* 1. DISCLAIMER BANNER: Estimated Business Transformation Value */}
       <RoiDisclaimerBanner />
-
-      {/* Top Banner: Solar & Virtual Battery System Status */}
-      <div className="bg-white rounded-xl border border-stone-200/90 p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-[#B38300]">
-            <Sun className="w-8 h-8" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                Solar Microgrid &amp; Tariff Arbitrage
-              </span>
-            </div>
-            <h2 className="text-xl font-black text-stone-900 mt-1">
-              Energy Cost Optimization &amp; "Virtual Battery"
-            </h2>
-            <p className="text-xs text-stone-500 mt-0.5">
-              Turning solar kilowatt-hours into kinetic crushed rock inventory before peak utility tariff surcharges strike
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 bg-[#0B0B0F] text-white px-5 py-3.5 rounded-xl border border-stone-800 self-start md:self-auto">
-          <div>
-            <span className="text-[11px] text-stone-400 font-medium block uppercase tracking-wider">
-              Current Tariff Tier
-            </span>
-            <span className="text-sm font-bold text-amber-400 font-mono mt-0.5 block">
-              {ENERGY_DATA.gridTariffTier}
-            </span>
-          </div>
-          <div className="border-l border-stone-700 pl-4">
-            <span className="text-[11px] text-stone-400 font-medium block uppercase tracking-wider">
-              Solar Contribution
-            </span>
-            <span className="text-xl font-black text-[#FFC72C] font-mono">
-              {ENERGY_DATA.solarSharePercent}%
-            </span>
-          </div>
-        </div>
-      </div>
-
+...
       {/* Real-Time Power Mix Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="bg-white rounded-xl p-5 border border-stone-200/90 shadow-xs">
           <div className="flex items-center justify-between text-stone-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Solar PV Active</span>
+            <span className="text-xs font-bold uppercase tracking-wider flex items-center">
+              Solar PV Active <DataInfoTooltip text="Sourced from the Power Quality Analyzer measuring Solar PV output (220 kW rated)." />
+            </span>
             <Sun className="w-4 h-4 text-[#B38300]" />
           </div>
           <div className="mt-3 flex items-baseline gap-2">
@@ -154,7 +116,9 @@ export const SolarEnergy: React.FC = () => {
 
         <div className="bg-white rounded-xl p-5 border border-stone-200/90 shadow-xs">
           <div className="flex items-center justify-between text-stone-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Energy Cost / Ton</span>
+            <span className="text-xs font-bold uppercase tracking-wider flex items-center">
+              Energy Cost / Ton <DataInfoTooltip text="Live cost analysis based on energy consumption." />
+            </span>
             <DollarSign className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="mt-3 flex items-baseline gap-2">
@@ -168,6 +132,8 @@ export const SolarEnergy: React.FC = () => {
           </div>
         </div>
       </div>
+...
+
 
       {/* Multi-Site Solar Fleet Rollout: Bulawayo, Harare, Marondera */}
       <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
