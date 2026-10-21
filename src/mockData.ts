@@ -180,19 +180,19 @@ export interface ReportItem {
 // ---------------------------------------------------------------------------
 
 export const HOURLY_TELEMETRY: HourlyTelemetry[] = [
-  { time: '06:00', throughputTph: 240, targetTph: 400, solarKw: 0, gridKw: 480, dieselKw: 0, costPerTon: 4.85 },
-  { time: '07:00', throughputTph: 360, targetTph: 400, solarKw: 25, gridKw: 560, dieselKw: 0, costPerTon: 4.30 },
-  { time: '08:00', throughputTph: 410, targetTph: 400, solarKw: 80, gridKw: 490, dieselKw: 0, costPerTon: 3.85 },
-  { time: '09:00', throughputTph: 425, targetTph: 400, solarKw: 140, gridKw: 390, dieselKw: 0, costPerTon: 3.20 },
-  { time: '10:00', throughputTph: 435, targetTph: 400, solarKw: 190, gridKw: 240, dieselKw: 0, costPerTon: 2.65 },
-  { time: '11:00', throughputTph: 450, targetTph: 400, solarKw: 215, gridKw: 150, dieselKw: 0, costPerTon: 2.10 },
-  { time: '12:00', throughputTph: 460, targetTph: 400, solarKw: 220, gridKw: 140, dieselKw: 0, costPerTon: 1.95 },
-  { time: '13:00', throughputTph: 440, targetTph: 400, solarKw: 210, gridKw: 160, dieselKw: 0, costPerTon: 2.15 },
-  { time: '14:00', throughputTph: 420, targetTph: 400, solarKw: 175, gridKw: 260, dieselKw: 0, costPerTon: 2.75 },
-  { time: '15:00', throughputTph: 415, targetTph: 400, solarKw: 120, gridKw: 380, dieselKw: 0, costPerTon: 3.40 },
-  { time: '16:00', throughputTph: 395, targetTph: 400, solarKw: 60, gridKw: 540, dieselKw: 0, costPerTon: 4.10 },
-  { time: '17:00', throughputTph: 380, targetTph: 400, solarKw: 15, gridKw: 610, dieselKw: 0, costPerTon: 4.60 },
-  { time: '18:00', throughputTph: 350, targetTph: 400, solarKw: 0, gridKw: 620, dieselKw: 0, costPerTon: 5.15 },
+  { time: '06:00', throughputTph: 96, targetTph: 100, solarKw: 0, gridKw: 480, dieselKw: 0, costPerTon: 4.85 },
+  { time: '07:00', throughputTph: 98, targetTph: 100, solarKw: 25, gridKw: 560, dieselKw: 0, costPerTon: 4.30 },
+  { time: '08:00', throughputTph: 102, targetTph: 100, solarKw: 80, gridKw: 490, dieselKw: 0, costPerTon: 3.85 },
+  { time: '09:00', throughputTph: 104, targetTph: 100, solarKw: 140, gridKw: 390, dieselKw: 0, costPerTon: 3.20 },
+  { time: '10:00', throughputTph: 105, targetTph: 100, solarKw: 190, gridKw: 240, dieselKw: 0, costPerTon: 2.65 },
+  { time: '11:00', throughputTph: 103, targetTph: 100, solarKw: 215, gridKw: 150, dieselKw: 0, costPerTon: 2.10 },
+  { time: '12:00', throughputTph: 104, targetTph: 100, solarKw: 220, gridKw: 140, dieselKw: 0, costPerTon: 1.95 },
+  { time: '13:00', throughputTph: 101, targetTph: 100, solarKw: 210, gridKw: 160, dieselKw: 0, costPerTon: 2.15 },
+  { time: '14:00', throughputTph: 103, targetTph: 100, solarKw: 175, gridKw: 260, dieselKw: 0, costPerTon: 2.75 },
+  { time: '15:00', throughputTph: 99, targetTph: 100, solarKw: 120, gridKw: 380, dieselKw: 0, costPerTon: 3.40 },
+  { time: '16:00', throughputTph: 97, targetTph: 100, solarKw: 60, gridKw: 540, dieselKw: 0, costPerTon: 4.10 },
+  { time: '17:00', throughputTph: 98, targetTph: 100, solarKw: 15, gridKw: 610, dieselKw: 0, costPerTon: 4.60 },
+  { time: '18:00', throughputTph: 95, targetTph: 100, solarKw: 0, gridKw: 620, dieselKw: 0, costPerTon: 5.15 },
 ];
 
 export const STOCKPILES: StockpileItem[] = [
