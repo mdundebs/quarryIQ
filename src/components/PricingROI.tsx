@@ -317,6 +317,122 @@ export const PricingROI: React.FC = () => {
         </div>
       </div>
 
+      {/* Before vs. After Automation Operational Comparison */}
+      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 border-b border-stone-200">
+          <div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-[#B38300]" />
+              <h2 className="text-xl font-bold text-stone-900">Operational Transformation: Before vs. After Automation</h2>
+            </div>
+            <p className="text-xs sm:text-sm text-stone-500 mt-1">
+              Direct economic and operating performance comparison between legacy manual crushing and the SitePlan AI automated plant.
+            </p>
+          </div>
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1.5 self-start sm:self-auto">
+            <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
+            24-Hour Continuous Model
+          </span>
+        </div>
+
+        {/* Two-Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          {/* Left Column: Before Automation (Current) */}
+          <div className="bg-stone-50 border border-stone-200/90 rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between pb-4 border-b border-stone-200">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500 block">Baseline State</span>
+                  <h3 className="text-lg font-black text-stone-900 mt-0.5">Before Automation (Current)</h3>
+                </div>
+                <span className="px-2.5 py-1 rounded-lg bg-stone-200 text-stone-700 text-xs font-bold">
+                  Legacy Operation
+                </span>
+              </div>
+
+              <div className="space-y-4 mt-5">
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200/70">
+                  <span className="text-xs font-semibold text-stone-600">Operating Hours:</span>
+                  <span className="font-mono font-bold text-stone-800 text-base">9 hrs/day</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200/70">
+                  <span className="text-xs font-semibold text-stone-600">Daily Production:</span>
+                  <span className="font-mono font-bold text-stone-800 text-base">420 tonnes</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200/70">
+                  <span className="text-xs font-semibold text-stone-600">Unplanned Downtime:</span>
+                  <span className="font-mono font-bold text-rose-700 text-base">12%</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200/70">
+                  <span className="text-xs font-semibold text-stone-600">Monthly ZESA Bill:</span>
+                  <span className="font-mono font-bold text-stone-800 text-base">$13,100</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-stone-200 text-xs text-stone-500 font-mono flex items-center justify-between">
+              <span>Shift Model: Single 9h shift</span>
+              <span className="text-stone-400">Manual feeder control</span>
+            </div>
+          </div>
+
+          {/* Right Column: After Automation (Proposed) */}
+          <div className="bg-[#0B0B0F] border-2 border-[#FFC72C] rounded-2xl p-6 text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[#FFC72C]/10 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="relative z-10">
+              <div className="flex items-center justify-between pb-4 border-b border-stone-800">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFC72C] block">SitePlan AI + Solar</span>
+                  <h3 className="text-lg font-black text-white mt-0.5">After Automation (Proposed)</h3>
+                </div>
+                <span className="px-2.5 py-1 rounded-lg bg-[#FFC72C] text-[#0B0B0F] text-xs font-extrabold uppercase shadow-sm">
+                  Full Automation
+                </span>
+              </div>
+
+              <div className="space-y-4 mt-5">
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-stone-900/90 border border-stone-800">
+                  <span className="text-xs font-semibold text-stone-300">Operating Hours:</span>
+                  <span className="font-mono font-black text-[#FFC72C] text-lg sm:text-xl">24 hrs/day</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-stone-900/90 border border-stone-800">
+                  <span className="text-xs font-semibold text-stone-300">Daily Production:</span>
+                  <span className="font-mono font-black text-[#FFC72C] text-lg sm:text-xl">1,050 tonnes</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-stone-900/90 border border-stone-800">
+                  <span className="text-xs font-semibold text-stone-300">Unplanned Downtime:</span>
+                  <span className="font-mono font-black text-[#FFC72C] text-lg sm:text-xl">2%</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-stone-900/90 border border-stone-800">
+                  <span className="text-xs font-semibold text-stone-300">Monthly ZESA Bill:</span>
+                  <span className="font-mono font-black text-[#FFC72C] text-lg sm:text-xl">$11,100</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-6 pt-4 border-t border-stone-800 text-xs text-[#FFC72C] font-mono flex items-center justify-between">
+              <span>Continuous choke-feed SCADA</span>
+              <span className="font-bold">+150% Output &bull; -$2,000/mo Power</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Big Disclaimer at the Bottom */}
+        <div className="mt-6 p-4 rounded-xl bg-amber-50 border-2 border-amber-300 text-amber-950 flex items-start gap-3 shadow-xs">
+          <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+          <p className="text-xs sm:text-sm font-semibold leading-relaxed">
+            These projections are based on industry benchmarks for 24-hour automated crushing plants and the proposed 220kW solar integration.
+          </p>
+        </div>
+      </div>
+
       {/* 1. Project Cost Breakdown Card */}
       <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">

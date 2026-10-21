@@ -13,7 +13,11 @@ import {
   Clock,
   Sparkles,
   BarChart2,
-  Radio
+  Radio,
+  Mountain,
+  Settings,
+  ChevronRight,
+  Info
 } from 'lucide-react';
 import {
   AreaChart,
@@ -91,6 +95,116 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
 
   return (
     <div className="space-y-8">
+      {/* Rock-to-Revenue Flow Operational Value Chain Widget */}
+      <div className="bg-[#0B0B0F] border border-stone-800 rounded-2xl p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-stone-800/80 gap-3 mb-5">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#FFC72C]/10 border border-[#FFC72C]/30 flex items-center justify-center text-[#FFC72C]">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base sm:text-lg font-black tracking-wide text-white uppercase">
+                  Rock-to-Revenue Flow
+                </h2>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+                  Live Closed-Loop
+                </span>
+              </div>
+              <p className="text-xs text-stone-400 mt-0.5">
+                Operational material transformation from quarry bench extraction to banked sales revenue
+              </p>
+            </div>
+          </div>
+
+          {/* Tooltip Explainer */}
+          <div className="relative group inline-flex items-center">
+            <div className="flex items-center gap-2 bg-stone-900 border border-stone-700/80 px-3 py-1.5 rounded-xl text-xs text-stone-300 hover:border-[#FFC72C]/60 transition-colors cursor-help">
+              <Info className="w-4 h-4 text-[#FFC72C] shrink-0" />
+              <span className="font-semibold text-stone-200 text-[11px]">Sensor &amp; Telemetry Provenance</span>
+            </div>
+            <div className="absolute right-0 top-full mt-2 hidden group-hover:block z-50 w-72 sm:w-80 p-3.5 bg-[#1A1A1F] border border-[#FFC72C]/40 rounded-xl shadow-2xl text-xs text-stone-300 leading-relaxed pointer-events-none">
+              <div className="font-bold text-[#FFC72C] text-[11px] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                End-to-End Data Feed
+              </div>
+              <p className="text-[11px] text-stone-200">
+                LiDAR feeds the Pit, Belt Scales feed the Crusher, and Weighbridge/Cameras feed the Revenue.
+              </p>
+              <div className="mt-2 pt-2 border-t border-stone-800 text-[10px] text-stone-400 font-mono">
+                Zero manual entries &bull; 100% automated physical sensors
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Horizontal Flexbox with 4 Connected Steps and Chevron Arrows */}
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+          {/* Step 1: Pit */}
+          <div className="flex-1 bg-stone-900/90 border border-stone-800 hover:border-stone-700 rounded-xl p-4 transition-all flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+              <Mountain className="w-6 h-6" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Step 1 &bull; Pit</div>
+              <div className="text-xs font-semibold text-stone-300 truncate">Pit Reserve</div>
+              <div className="text-xl font-black font-mono text-[#FFC72C] mt-0.5">45,200 tonnes</div>
+            </div>
+          </div>
+
+          {/* Chevron 1 */}
+          <div className="hidden lg:flex items-center justify-center text-stone-600 px-1">
+            <ChevronRight className="w-6 h-6 text-[#FFC72C]/60" />
+          </div>
+
+          {/* Step 2: Crushing */}
+          <div className="flex-1 bg-stone-900/90 border border-stone-800 hover:border-stone-700 rounded-xl p-4 transition-all flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
+              <Settings className="w-6 h-6 animate-[spin_10s_linear_infinite]" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Step 2 &bull; Crushing</div>
+              <div className="text-xs font-semibold text-stone-300 truncate">Live Crushing</div>
+              <div className="text-xl font-black font-mono text-[#FFC72C] mt-0.5">421 TPH</div>
+            </div>
+          </div>
+
+          {/* Chevron 2 */}
+          <div className="hidden lg:flex items-center justify-center text-stone-600 px-1">
+            <ChevronRight className="w-6 h-6 text-[#FFC72C]/60" />
+          </div>
+
+          {/* Step 3: Stockpile */}
+          <div className="flex-1 bg-stone-900/90 border border-stone-800 hover:border-stone-700 rounded-xl p-4 transition-all flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 shrink-0">
+              <Package className="w-6 h-6" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Step 3 &bull; Stockpile</div>
+              <div className="text-xs font-semibold text-stone-300 truncate">Stock Ready</div>
+              <div className="text-xl font-black font-mono text-[#FFC72C] mt-0.5">12,450 tonnes</div>
+            </div>
+          </div>
+
+          {/* Chevron 3 */}
+          <div className="hidden lg:flex items-center justify-center text-stone-600 px-1">
+            <ChevronRight className="w-6 h-6 text-[#FFC72C]/60" />
+          </div>
+
+          {/* Step 4: Revenue */}
+          <div className="flex-1 bg-stone-900/90 border border-[#FFC72C]/50 hover:border-[#FFC72C] rounded-xl p-4 transition-all shadow-md flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <DollarSign className="w-6 h-6" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[#FFC72C]">Step 4 &bull; Revenue</div>
+              <div className="text-xs font-semibold text-stone-300 truncate">Sales Value</div>
+              <div className="text-xl font-black font-mono text-[#FFC72C] mt-0.5">$86,400</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Top Banner: Shift Status & Live Telemetry Indicator */}
       <div className="bg-white rounded-xl border border-stone-200/90 p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
@@ -160,7 +274,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           )}
           <div className="flex items-center justify-between text-stone-500">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center">
-              Instant Throughput <DataInfoTooltip text="Sourced live from the Saimo BH30 Belt Scale Integrator via Modbus TCP." />
+              Instant Throughput 
+              <DataInfoTooltip 
+                hardwareSource="Saimo BH30 Belt Scale Integrator (Modbus TCP) on Primary Conveyor."
+                calculationLogic="(Load Cell Weight kg × Belt Speed m/s) / 1000."
+                businessValue="Real-time monitoring ensures the plant is running at its maximum 420 TPH capacity without overloading the crushers."
+              />
             </span>
             <div className="flex items-center gap-1.5">
               {liveDataEnabled && (
@@ -203,7 +322,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           )}
           <div className="flex items-center justify-between text-stone-500">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center">
-              Daily Production <DataInfoTooltip text="Aggregated daily tonnage from weighbridge and belt integrator systems." />
+              Daily Production 
+              <DataInfoTooltip 
+                hardwareSource="Saimo BH30 Belt Scale Accumulator."
+                calculationLogic="Continuous integration of live TPH data over the shift duration."
+                businessValue="Tracks progress against the daily 5,300t quota to ensure FY2026 targets are met."
+              />
             </span>
             <Package className="w-4 h-4 text-[#B38300]" />
           </div>
@@ -237,7 +361,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           )}
           <div className="flex items-center justify-between text-stone-500">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center">
-              Revenue Run-Rate <DataInfoTooltip text="Calculated as Daily Tonnage multiplied by the configured Selling Price per Ton." />
+              Revenue Run-Rate 
+              <DataInfoTooltip 
+                hardwareSource="Derived from Daily Production."
+                calculationLogic="Total Tonnes Crushed × Selling Price per Tonne (Configured in Settings)."
+                businessValue="Financial projection for the day based on current output, allowing the MD to instantly see the monetary impact of downtime."
+              />
             </span>
             <DollarSign className="w-4 h-4 text-emerald-600" />
           </div>
@@ -263,7 +392,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
         <div className="bg-white rounded-xl p-5 border border-stone-200/90 shadow-xs hover:border-[#FFC72C] transition-all relative overflow-hidden">
           <div className="flex items-center justify-between text-stone-500">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center">
-              Blended Cost / Ton <DataInfoTooltip text="Live cost analysis based on energy consumption and wear rate monitoring." />
+              Blended Cost / Ton 
+              <DataInfoTooltip 
+                hardwareSource="Power Quality Analyzer + Belt Scales."
+                calculationLogic="(Energy Cost + Labour Cost + Maintenance) / Total Tonnes."
+                businessValue="Tracks operational efficiency. Automation aims to reduce this by 15% through optimized energy use and reduced downtime."
+              />
             </span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
           </div>

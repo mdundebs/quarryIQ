@@ -864,6 +864,7 @@ export const RiskDashboard: React.FC = () => {
             onValueChange={(val) => updateParamValue('transformerLoad', val)}
             formatTooltip={(val) => `${val}% load`}
             tooltipText="Calculated as (Actual kVA / 500 kVA Rated Capacity). Sourced from the Power Quality Analyzer."
+            businessImpact="Overloading the 500kVA transformer will cause a shutdown of the entire plant. Lost production cost: $5,000 per hour."
           />
 
           {/* CARD 2: Power Factor (cos φ) */}
@@ -874,6 +875,7 @@ export const RiskDashboard: React.FC = () => {
             onValueChange={(val) => updateParamValue('powerFactor', val)}
             formatTooltip={(val) => `${Number(val).toFixed(2)} cos φ`}
             tooltipText="Live measurement from the Power Quality Analyzer. Warning triggered if PF > 1.0 CAP."
+            businessImpact="Over-compensation causes voltage spikes that will burn out motors prematurely. Potential replacement cost: $15,000."
           />
 
           {/* CARD 3: Motor Insulation Resistance (MΩ) */}
@@ -883,6 +885,7 @@ export const RiskDashboard: React.FC = () => {
             iconColor="text-emerald-500"
             onValueChange={(val) => updateParamValue('motorInsulation', val)}
             formatTooltip={(val) => `${Number(val).toFixed(1)} MΩ`}
+            businessImpact="Water ingress in the motor windings. If it shorts, the motor must be rewound. Cost: $4,500 and 3 days of downtime."
           />
 
           {/* CARD 4: MCC Room Temperature (°C) */}
@@ -892,6 +895,7 @@ export const RiskDashboard: React.FC = () => {
             iconColor="text-orange-500"
             onValueChange={(val) => updateParamValue('mccTemperature', val)}
             formatTooltip={(val) => `${val}°C`}
+            businessImpact="Excessive heat trips VFD cooling fans and leads to thermal shutdowns. Lost production cost: $2,500 per hour."
           />
 
           {/* CARD 5: MCC Room Humidity (%) */}
@@ -901,6 +905,7 @@ export const RiskDashboard: React.FC = () => {
             iconColor="text-cyan-500"
             onValueChange={(val) => updateParamValue('mccHumidity', val)}
             formatTooltip={(val) => `${val}% RH`}
+            businessImpact="High humidity accelerates corrosion on switchgear and relay contacts, triggering intermittent electrical faults."
           />
 
           {/* CARD 6: Water Leak Detection (Alarm/OK) */}
@@ -911,6 +916,7 @@ export const RiskDashboard: React.FC = () => {
             isToggle={true}
             onValueChange={(val) => updateParamValue('waterLeakDetection', val)}
             formatTooltip={(val) => (val === 1 ? 'ALARM' : 'OK')}
+            businessImpact="Flooding in subterranean conveyor pits shorts sumps and drive motors. Potential replacement & clean-out: $12,000."
           />
 
           {/* CARD 7: Lightning Risk Status */}
@@ -920,6 +926,7 @@ export const RiskDashboard: React.FC = () => {
             iconColor="text-purple-500"
             onValueChange={(val) => updateParamValue('lightningRisk', val)}
             formatTooltip={(val) => `${val} index`}
+            businessImpact="Direct surges destroy PLC I/O cards and transducer loops. Unprotected surge cost: $20,000+ in electronic replacement."
           />
 
           {/* CARD 8: Grid Stability (ZESA vs Generator) */}
@@ -929,6 +936,7 @@ export const RiskDashboard: React.FC = () => {
             iconColor="text-rose-500"
             onValueChange={(val) => updateParamValue('gridStability', val)}
             formatTooltip={(val) => `${val} stability`}
+            businessImpact="Voltage sags drop out sensitive contactors causing unscheduled jaw stops with rock in chamber ($3,000 clearance fee)."
           />
 
         </div>
@@ -1299,6 +1307,7 @@ interface ParameterCardProps {
   onValueChange: (val: number) => void;
   formatTooltip: (val: number | string) => string;
   tooltipText?: string;
+  businessImpact?: string;
 }
 
 const ParameterCard: React.FC<ParameterCardProps> = ({
@@ -1309,6 +1318,7 @@ const ParameterCard: React.FC<ParameterCardProps> = ({
   onValueChange,
   formatTooltip,
   tooltipText,
+  businessImpact,
 }) => {
   const statusBadge = useMemo(() => {
     if (item.status === 'critical') {
@@ -1343,7 +1353,11 @@ const ParameterCard: React.FC<ParameterCardProps> = ({
             </div>
             <div>
               <h4 className="text-sm font-bold text-stone-900 leading-tight flex items-center">
-                {item.name} {tooltipText && <DataInfoTooltip text={tooltipText} />}
+                {item.name} {tooltipText && <DataInfoTooltip 
+                  hardwareSource="Power Quality Analyzer" 
+                  calculationLogic="Derived from system parameters" 
+                  businessValue="Critical for stability monitoring" 
+                />}
               </h4>
               <span className="text-[10px] text-stone-500 font-mono">
                 {item.thresholdText}
@@ -1513,6 +1527,23 @@ const ParameterCard: React.FC<ParameterCardProps> = ({
           {item.recommendation}
         </div>
       </div>
+
+      {/* The Business Impact Section */}
+      {businessImpact && (
+        <div className="mt-2.5 pt-2 border-t border-rose-100/80">
+          <div className="bg-rose-50/90 rounded-lg p-3 border border-rose-200/90 text-rose-950 shadow-xs">
+            <div className="flex items-center gap-1.5 font-bold text-rose-900 text-[11px] uppercase tracking-wider mb-1">
+              <div className="w-4 h-4 rounded-full bg-rose-200/80 flex items-center justify-center text-rose-800 shrink-0">
+                <DollarSign className="w-2.5 h-2.5 stroke-[2.5]" />
+              </div>
+              <span>The Business Impact</span>
+            </div>
+            <p className="text-[11px] leading-relaxed text-rose-900 font-medium pl-5.5">
+              {businessImpact}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

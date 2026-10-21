@@ -73,7 +73,12 @@ export const SolarEnergy: React.FC = () => {
         <div className="bg-white rounded-xl p-5 border border-stone-200/90 shadow-xs">
           <div className="flex items-center justify-between text-stone-500">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center">
-              Solar PV Active <DataInfoTooltip text="Sourced from the Power Quality Analyzer measuring Solar PV output (220 kW rated)." />
+              Solar PV Active 
+              <DataInfoTooltip 
+                hardwareSource="Power Quality Analyzer" 
+                calculationLogic="Measuring total Solar PV output in real-time." 
+                businessValue="Monitor solar performance vs rated 220 kW capacity." 
+              />
             </span>
             <Sun className="w-4 h-4 text-[#B38300]" />
           </div>
@@ -117,7 +122,12 @@ export const SolarEnergy: React.FC = () => {
         <div className="bg-white rounded-xl p-5 border border-stone-200/90 shadow-xs">
           <div className="flex items-center justify-between text-stone-500">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center">
-              Energy Cost / Ton <DataInfoTooltip text="Live cost analysis based on energy consumption." />
+              Energy Cost / Ton 
+              <DataInfoTooltip 
+                hardwareSource="Power Quality Analyzer + Belt Scales" 
+                calculationLogic="Total energy cost / Tonnes produced" 
+                businessValue="Tracks efficiency gains from solar and automation" 
+              />
             </span>
             <DollarSign className="w-4 h-4 text-emerald-600" />
           </div>
