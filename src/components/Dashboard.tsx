@@ -37,6 +37,7 @@ import {
 } from 'recharts';
 import { DAILY_PLANT_LOAD_DATA, HOURLY_TELEMETRY, STOCKPILES } from '../mockData';
 import { DataInfoTooltip } from './DataInfoTooltip';
+import { BASELINE } from '../config/baseline';
 
 interface DashboardProps {
   liveDataEnabled?: boolean;
@@ -49,11 +50,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
   const [guideOpen, setGuideOpen] = useState<boolean>(false);
 
   // Live updating states for TPH, Daily Tons, Revenue
-  // Realistic 9-hour shift figures (Target: 100 t/h, 900 t/day quota, $60/ton selling price)
-  const [tph, setTph] = useState<number>(104);
+  // Realistic shift figures derived from BASELINE
+  const [tph, setTph] = useState<number>(BASELINE.LIVE_TPH_EXAMPLE);
   const [dailyTons, setDailyTons] = useState<number>(824.5);
-  const [revenue, setRevenue] = useState<number>(49470);
-  const [blendedCost, setBlendedCost] = useState<number>(3.95);
+  const [revenue, setRevenue] = useState<number>(Math.round(824.5 * BASELINE.SELLING_PRICE_PER_TONNE_USD));
+  const [blendedCost, setBlendedCost] = useState<number>(BASELINE.CURRENT_BLENDED_COST_PER_TONNE);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   // Update every 3 seconds when liveDataEnabled is true
@@ -63,26 +64,27 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
     const interval = setInterval(() => {
       setIsUpdating(true);
 
-      // Realistic physical fluctuation for ~100 t/h:
-      // ~100 t/h corresponds to ~0.083 tonnes every 3 seconds
+      // Realistic physical fluctuation for nominal target TPH:
       const deltaTons = 0.07 + Math.random() * 0.03;
       const tphFluctuation = Math.floor((Math.random() - 0.48) * 3);
 
-      // Live TPH fluctuates between 98 and 105 t/h
+      // Live TPH fluctuates between LIVE_TPH_MIN and LIVE_TPH_MAX
       setTph((prev) => {
         const next = prev + tphFluctuation;
-        return Math.max(98, Math.min(105, next));
+        return Math.max(BASELINE.LIVE_TPH_MIN, Math.min(BASELINE.LIVE_TPH_MAX, next));
       });
 
       setDailyTons((prev) => +(prev + deltaTons).toFixed(1));
 
-      // Revenue ticks based on $60/ton selling price
-      setRevenue((prev) => Math.round(prev + deltaTons * 60));
+      // Revenue ticks based on selling price per tonne
+      setRevenue((prev) => Math.round(prev + deltaTons * BASELINE.SELLING_PRICE_PER_TONNE_USD));
 
-      // Subtle cost per ton drift around $3.95/ton ($3.93 to $3.97)
+      // Subtle cost per ton drift around current blended cost
       setBlendedCost((prev) => {
         const delta = (Math.random() - 0.5) * 0.01;
-        return +(Math.max(3.93, Math.min(3.97, prev + delta))).toFixed(2);
+        const minCost = BASELINE.CURRENT_BLENDED_COST_PER_TONNE - 0.02;
+        const maxCost = BASELINE.CURRENT_BLENDED_COST_PER_TONNE + 0.02;
+        return +(Math.max(minCost, Math.min(maxCost, prev + delta))).toFixed(2);
       });
 
       setTimeout(() => {
@@ -103,8 +105,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
     0
   );
 
-  // Daily quota: 900 tonnes (100 t/h * 9 hours)
-  const dailyQuota = 900;
+  // Daily quota from BASELINE
+  const dailyQuota = BASELINE.DAILY_QUOTA_TONNES;
   const dailyProgressPercent = Math.min(+((dailyTons / dailyQuota) * 100).toFixed(1), 100);
 
   return (
@@ -117,7 +119,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               <Info className="w-4 h-4" />
             </div>
             <p className="text-xs sm:text-sm text-stone-200 leading-relaxed font-medium">
-              <strong className="text-[#FFC72C] font-bold">Dashboard Assumptions:</strong> Based on FY2026 Target of 24,000 tonnes/month (26 operating days). Calculated on a 9-hour shift at ~100 t/h. Selling price: $60/ton. Energy tariff: $0.14/kWh.
+              <strong className="text-[#FFC72C] font-bold">Dashboard Assumptions:</strong> {BASELINE.ASSUMPTIONS_BANNER_TEXT}
             </p>
           </div>
           <button
@@ -202,7 +204,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               <div className="text-[10px] font-bold uppercase tracking-wider text-stone-400">Step 2 &bull; Crushing</div>
               <div className="text-xs font-semibold text-stone-300 truncate">Live Crushing</div>
               <div className="text-xl font-black font-mono text-[#FFC72C] mt-0.5">
-                {liveDataEnabled ? `${tph} TPH` : '104 TPH'}
+                {liveDataEnabled ? `${tph} TPH` : `${BASELINE.LIVE_TPH_EXAMPLE} TPH`}
               </div>
             </div>
           </div>
@@ -262,7 +264,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
                 }`}
               ></span>
               <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                Shift 1 (9-Hour Production Flow)
+                Shift 1 ({BASELINE.SHIFT_HOURS}-Hour Production Flow)
               </span>
               <span className="text-xs text-stone-500 font-mono">07:00 - 16:00</span>
               {liveDataEnabled ? (
@@ -299,7 +301,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               <span className={isUpdating ? 'text-[#B38300]' : 'text-stone-900'}>
                 {dailyTons.toLocaleString()}
               </span>{' '}
-              / 900 T ({dailyProgressPercent}%)
+              / {BASELINE.DAILY_QUOTA_TONNES} T ({dailyProgressPercent}%)
             </div>
           </div>
           <div className="w-28 sm:w-32 bg-stone-100 rounded-full h-3 border border-stone-200 overflow-hidden">
@@ -328,7 +330,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               <DataInfoTooltip 
                 hardwareSource="Saimo BH30 Belt Scale Integrator (Modbus TCP) on Primary Conveyor."
                 calculationLogic="(Load Cell Weight kg × Belt Speed m/s) / 1000."
-                businessValue="Real-time monitoring ensures the plant is running at its nominal 100 TPH capacity without overloading the crushers."
+                businessValue={`Real-time monitoring ensures the plant is running at its nominal ${BASELINE.TARGET_TPH} TPH capacity without overloading the crushers.`}
               />
             </span>
             <div className="flex items-center gap-1.5">
@@ -355,7 +357,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           <div className="mt-2 flex items-center justify-between text-xs">
             <span className="text-emerald-700 font-semibold flex items-center gap-0.5">
               <ArrowUpRight className="w-3.5 h-3.5" />
-              +{(((tph - 100) / 100) * 100).toFixed(1)}% vs Target (100 t/h)
+              +{(((tph - BASELINE.TARGET_TPH) / BASELINE.TARGET_TPH) * 100).toFixed(1)}% vs Target ({BASELINE.TARGET_TPH} t/h)
             </span>
             <span className="text-stone-400 font-mono">Jaw C140</span>
           </div>
@@ -376,7 +378,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               <DataInfoTooltip 
                 hardwareSource="Saimo BH30 Belt Scale Accumulator."
                 calculationLogic="Continuous integration of live TPH data over the shift duration."
-                businessValue="Tracks progress against the daily 900t quota (9h @ 100 t/h) to ensure FY2026 targets are met."
+                businessValue={`Tracks progress against the daily ${BASELINE.DAILY_QUOTA_TONNES}t quota (${BASELINE.SHIFT_HOURS}h @ ${BASELINE.TARGET_TPH} t/h) to ensure FY2026 targets are met (24-hour potential: ~${BASELINE.POTENTIAL_24H_DAILY_TONNES.toLocaleString()}t).`}
               />
             </span>
             <Package className="w-4 h-4 text-[#B38300]" />
@@ -394,9 +396,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           <div className="mt-2 flex items-center justify-between text-xs">
             <span className="text-emerald-700 font-semibold flex items-center gap-0.5">
               <ArrowUpRight className="w-3.5 h-3.5" />
-              {dailyProgressPercent}% of 900t Quota
+              {dailyProgressPercent}% of {BASELINE.DAILY_QUOTA_TONNES}t Quota
             </span>
-            <span className="text-stone-400 font-mono">9h Shift</span>
+            <span className="text-stone-400 font-mono">{BASELINE.SHIFT_HOURS}h Shift</span>
           </div>
         </div>
 
@@ -414,8 +416,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               Revenue Run-Rate 
               <DataInfoTooltip 
                 hardwareSource="Derived from Daily Production."
-                calculationLogic="Total Tonnes Crushed × Selling Price per Tonne ($60/t configured)."
-                businessValue="Financial projection for the day based on current output (Target: $54,000/day at 900 tonnes)."
+                calculationLogic={`Total Tonnes Crushed × Selling Price per Tonne ($${BASELINE.SELLING_PRICE_PER_TONNE_USD}/t configured).`}
+                businessValue={`Financial projection for the day based on current output (Target: $${(BASELINE.DAILY_QUOTA_TONNES * BASELINE.SELLING_PRICE_PER_TONNE_USD).toLocaleString()}/day at ${BASELINE.DAILY_QUOTA_TONNES} tonnes × $${BASELINE.SELLING_PRICE_PER_TONNE_USD}/ton).`}
               />
             </span>
             <DollarSign className="w-4 h-4 text-emerald-600" />
@@ -432,7 +434,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           <div className="mt-2 flex items-center justify-between text-xs">
             <span className="text-emerald-700 font-semibold flex items-center gap-0.5">
               <ArrowUpRight className="w-3.5 h-3.5" />
-              Target: $54,000 (900t × $60)
+              Target: ${(BASELINE.DAILY_QUOTA_TONNES * BASELINE.SELLING_PRICE_PER_TONNE_USD).toLocaleString()} ({BASELINE.DAILY_QUOTA_TONNES}t × ${BASELINE.SELLING_PRICE_PER_TONNE_USD})
             </span>
             <span className="text-stone-400 font-mono">Today Realized</span>
           </div>
@@ -446,7 +448,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               <DataInfoTooltip 
                 hardwareSource="Power Quality Analyzer + Belt Scales."
                 calculationLogic="(Energy Cost + Labour Cost + Maintenance) / Total Tonnes."
-                businessValue="Tracks operational efficiency. Automation aims to reduce this by 15% through optimized energy use and reduced downtime."
+                businessValue={`Tracks operational efficiency. Current: $${BASELINE.CURRENT_BLENDED_COST_PER_TONNE.toFixed(2)}/ton. Automation aims to reduce this to ~$${BASELINE.TARGET_BLENDED_COST_PER_TONNE.toFixed(2)}/ton (-19%) through optimized energy use and reduced downtime.`}
               />
             </span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
@@ -484,10 +486,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
             <div>
               <h3 className="text-base font-bold text-stone-900">
-                Hourly Tonnage Output vs Target (100 t/h)
+                Hourly Tonnage Output vs Target ({BASELINE.TARGET_TPH} t/h)
               </h3>
               <p className="text-xs text-stone-500 mt-0.5">
-                Aggregated continuous weightometer telemetry across primary jaw feeder (9-hour shift @ 100 t/h target)
+                Aggregated continuous weightometer telemetry across primary jaw feeder ({BASELINE.SHIFT_HOURS}-hour shift @ {BASELINE.TARGET_TPH} t/h target)
               </p>
             </div>
             <div className="flex items-center gap-4 text-xs font-semibold">
@@ -497,7 +499,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="w-3 h-0.5 bg-stone-400"></span>
-                <span className="text-stone-500">Target (100)</span>
+                <span className="text-stone-500">Target ({BASELINE.TARGET_TPH})</span>
               </div>
             </div>
           </div>
@@ -527,7 +529,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
                     name === 'throughputTph' ? 'Actual Output' : 'Nominal Target',
                   ]}
                 />
-                <ReferenceLine y={100} stroke="#8c8a82" strokeDasharray="3 3" />
+                <ReferenceLine y={BASELINE.TARGET_TPH} stroke="#8c8a82" strokeDasharray="3 3" />
                 <Area
                   type="monotone"
                   dataKey="throughputTph"
@@ -747,23 +749,32 @@ export const Dashboard: React.FC<DashboardProps> = ({ liveDataEnabled = true }) 
                   <div className="grid grid-cols-2 gap-2 text-xs font-mono text-stone-300">
                     <div className="bg-[#1A1A1F] p-2.5 rounded-lg border border-stone-800">
                       <span className="text-stone-400 text-[10px] block font-sans">Monthly Target:</span>
-                      <strong className="text-white text-xs">24,000 tonnes</strong>
+                      <strong className="text-white text-xs">{BASELINE.MONTHLY_TARGET_TONNES.toLocaleString()} tonnes</strong>
                     </div>
                     <div className="bg-[#1A1A1F] p-2.5 rounded-lg border border-stone-800">
                       <span className="text-stone-400 text-[10px] block font-sans">Crushing Rate:</span>
-                      <strong className="text-[#FFC72C] text-xs">100 t/h (9h shift)</strong>
+                      <strong className="text-[#FFC72C] text-xs">{BASELINE.TARGET_TPH} t/h ({BASELINE.SHIFT_HOURS}h shift)</strong>
                     </div>
                     <div className="bg-[#1A1A1F] p-2.5 rounded-lg border border-stone-800">
                       <span className="text-stone-400 text-[10px] block font-sans">Selling Price:</span>
-                      <strong className="text-emerald-400 text-xs">$60 / ton</strong>
+                      <strong className="text-emerald-400 text-xs">${BASELINE.SELLING_PRICE_PER_TONNE_USD} / ton</strong>
                     </div>
                     <div className="bg-[#1A1A1F] p-2.5 rounded-lg border border-stone-800">
                       <span className="text-stone-400 text-[10px] block font-sans">Daily Quota:</span>
-                      <strong className="text-white text-xs">900 tonnes / day</strong>
+                      <strong className="text-white text-xs">{BASELINE.DAILY_QUOTA_TONNES} tonnes / day</strong>
+                    </div>
+                    <div className="bg-[#1A1A1F] p-2.5 rounded-lg border border-stone-800">
+                      <span className="text-stone-400 text-[10px] block font-sans">Current Blended Cost:</span>
+                      <strong className="text-amber-400 text-xs">${BASELINE.CURRENT_BLENDED_COST_PER_TONNE.toFixed(2)} / ton</strong>
+                    </div>
+                    <div className="bg-[#1A1A1F] p-2.5 rounded-lg border border-stone-800">
+                      <span className="text-stone-400 text-[10px] block font-sans">Target After Automation:</span>
+                      <strong className="text-emerald-400 text-xs">~${BASELINE.TARGET_BLENDED_COST_PER_TONNE.toFixed(2)} / ton</strong>
                     </div>
                   </div>
-                  <div className="mt-2.5 text-[10px] text-stone-400 font-mono">
-                    26 operating days/month &bull; Energy tariff: $0.14/kWh
+                  <div className="mt-2.5 text-[10px] text-stone-400 font-mono flex items-center justify-between">
+                    <span>{BASELINE.OPERATING_DAYS_PER_MONTH} operating days/month &bull; Tariff: $0.14/kWh</span>
+                    <span className="text-[#FFC72C]/80">24h potential: ~{BASELINE.POTENTIAL_24H_DAILY_TONNES.toLocaleString()} t/day</span>
                   </div>
                 </div>
 

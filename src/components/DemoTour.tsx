@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASELINE } from '../config/baseline';
 import {
   Sparkles,
   ArrowRight,
@@ -32,15 +33,15 @@ const TOUR_STEPS: TourStep[] = [
     title: '1. MD Executive Dashboard Overview',
     description: 'Welcome to your quarry control center. This screen consolidates Metso/Sandvik crushing PLC feeds, electrical grid draw, and daily quota tracking into one high-level cockpit.',
     targetTab: 'dashboard',
-    highlightArea: 'Top shift status banner and executive daily production progress bar (91.5% of 5,300t quota).',
+    highlightArea: `Top shift status banner and executive daily production progress bar (91.6% of ${BASELINE.DAILY_QUOTA_TONNES}t quota; 24h potential: ~${BASELINE.POTENTIAL_24H_DAILY_TONNES.toLocaleString()}t).`,
     badge: 'Executive Cockpit',
   },
   {
     stepNumber: 2,
     title: '2. Live Production & Energy KPIs',
-    description: 'Instant rock throughput (435 t/h vs 400 t/h target), daily revenue run-rate ($86,450), and blended cost per ton ($3.94/t). Notice how numbers tick smoothly in real time.',
+    description: `Instant rock throughput (${BASELINE.LIVE_TPH_EXAMPLE} t/h vs ${BASELINE.TARGET_TPH} t/h target), daily revenue run-rate ($49,470 / $${(BASELINE.DAILY_QUOTA_TONNES * BASELINE.SELLING_PRICE_PER_TONNE_USD / 1000).toFixed(0)}k quota), and blended cost per ton ($${BASELINE.CURRENT_BLENDED_COST_PER_TONNE.toFixed(2)}/t). Notice how numbers tick smoothly in real time.`,
     targetTab: 'dashboard',
-    highlightArea: 'Top 4 KPI cards and 24-hour continuous weightometer tonnage charts.',
+    highlightArea: 'Top 4 KPI cards and continuous weightometer tonnage charts.',
     badge: 'Real-Time Telemetry',
   },
   {

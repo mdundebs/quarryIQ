@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { BASELINE } from '../config/baseline';
 import {
   Zap,
   Gauge,
@@ -419,7 +420,7 @@ export const RiskDashboard: React.FC = () => {
           technicalDiagnosis:
             'For every 10°C rise above 25°C in switchrooms, electrolytic capacitor lifespan in VFD drives and Siemens S7-1500 PLC power supplies is halved. At 35°C, inverters automatically derate output torque.',
           preventativeProtocol: 'Monthly air filter replacement on switchroom intake dampers; test auto-failover between dual HVAC units.',
-          financialSafeguard: 'Prevents nuisance VFD over-temperature trips costing $6,800/hour during peak 500 t/h crushing runs.',
+          financialSafeguard: `Prevents nuisance VFD over-temperature trips costing $6,800/hour during peak ${BASELINE.TARGET_TPH} t/h crushing runs.`,
         };
       } else if (q.includes('humidity') || q.includes('condensation') || q.includes('moisture')) {
         const h = params.mccHumidity.currentValue;

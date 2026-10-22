@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASELINE } from '../config/baseline';
 import {
   X,
   BookOpen,
@@ -73,8 +74,8 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
       icon: BarChart3,
       summary: 'Key figures for the Managing Director: hourly production, stock levels, and revenue run-rate.',
       content: [
-        'Instant Throughput (TPH): Shows tonnes crushed per hour. A green number means the plant is beating the 400 t/h target.',
-        'Daily Production: Displays total tonnes produced today against your daily 5,300 tonne quota.',
+        `Instant Throughput (TPH): Shows tonnes crushed per hour. A green number means the plant is beating the ${BASELINE.TARGET_TPH} t/h target (nominal ${BASELINE.LIVE_TPH_MIN}–${BASELINE.LIVE_TPH_MAX} t/h).`,
+        `Daily Production: Displays total tonnes produced today against your daily ${BASELINE.DAILY_QUOTA_TONNES} tonne quota (${BASELINE.SHIFT_HOURS}-hour shift @ ${BASELINE.TARGET_TPH} t/h, ${BASELINE.MONTHLY_TARGET_TONNES.toLocaleString()}t monthly target; 24-hour potential: ~${BASELINE.POTENTIAL_24H_DAILY_TONNES.toLocaleString()}t).`,
         'Stockpile Inventory: Visual bars showing how full each product pile is (19mm aggregate, G1 sub-base, sand, etc.) with current market dollar values.',
         'Power Mix Chart: Shows in gold how much free solar power is being used compared to grid electricity.',
       ],

@@ -13,20 +13,21 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { DIGITAL_TWIN_NODES, MaterialBalanceNode } from '../mockData';
+import { BASELINE } from '../config/baseline';
 
 export const DigitalTwin: React.FC = () => {
   const [nodes, setNodes] = useState<MaterialBalanceNode[]>(DIGITAL_TWIN_NODES);
   const [selectedNode, setSelectedNode] = useState<MaterialBalanceNode>(DIGITAL_TWIN_NODES[2]); // Surge buffer
 
-  // Aggregated Quarry Mass Balance:
-  // Total Mined In = 5,400 T
-  // Total Dispatched Out = 4,305 T
-  // Total Inventory Net Build = +1,070 T
-  // Total Discrepancy = -25 T (-0.46% of total mass, well within 1.0% moisture/dust loss standard)
-  const totalMinedToday = 5400;
-  const totalDispatchedToday = 4305;
-  const totalNetAccumulated = 1070;
-  const netVarianceTons = 25; // Moisture & dust loss
+  // Aggregated Quarry Mass Balance (${BASELINE.SHIFT_HOURS}-Hour Shift @ ~${BASELINE.TARGET_TPH} t/h Baseline):
+  // Total Mined In = 920 T
+  // Total Dispatched Out = 780 T
+  // Total Inventory Net Build = +136 T
+  // Total Discrepancy = -4 T (-0.43% of total mass, well within 1.0% moisture/dust loss standard)
+  const totalMinedToday = 920;
+  const totalDispatchedToday = 780;
+  const totalNetAccumulated = 136;
+  const netVarianceTons = 4; // Moisture & dust loss
 
   return (
     <div className="space-y-8">
@@ -39,7 +40,7 @@ export const DigitalTwin: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                Mass Balance: Verified (-0.46% Loss)
+                Mass Balance: Verified (-0.43% Loss)
               </span>
             </div>
             <h2 className="text-xl font-black text-stone-900 mt-1">
@@ -106,7 +107,7 @@ export const DigitalTwin: React.FC = () => {
           <div className="p-3 rounded-lg bg-stone-900/60 border border-stone-800">
             <span className="text-[11px] text-stone-400 uppercase">Moisture &amp; Dust Loss</span>
             <div className="text-xl font-black text-amber-400 font-mono mt-1">
-              -{netVarianceTons} T (-0.46%)
+              -{netVarianceTons} T (-0.43%)
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASELINE } from '../config/baseline';
 import {
   Play,
   Pause,
@@ -37,8 +38,8 @@ const DEMO_SCENES: DemoScene[] = [
     tab: 'dashboard',
     durationSeconds: 10,
     title: 'Scene 1: Real-Time Executive SCADA Cockpit',
-    narration: 'Welcome to QuarryIQ. Here, Davis Granite executive leadership monitors instant primary jaw throughput (435 t/h), shift quota progression (91.5%), and live stockyard valuations without waiting for end-of-month manual surveys.',
-    keyHighlight: 'Instant 435 t/h throughput & live $340k+ stockyard inventory valuation.',
+    narration: `Welcome to QuarryIQ. Here, Davis Granite executive leadership monitors instant primary jaw throughput (${BASELINE.LIVE_TPH_EXAMPLE} t/h), shift quota progression (91.6% of ${BASELINE.DAILY_QUOTA_TONNES}t), and live stockyard valuations without waiting for end-of-month manual surveys.`,
+    keyHighlight: `Instant ${BASELINE.LIVE_TPH_EXAMPLE} t/h throughput & live $340k+ stockyard inventory valuation.`,
   },
   {
     id: 'control-room',

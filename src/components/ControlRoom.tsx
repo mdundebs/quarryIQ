@@ -40,6 +40,7 @@ import {
   Legend
 } from 'recharts';
 import { RoiDisclaimerBanner } from './RoiDisclaimerBanner';
+import { BASELINE } from '../config/baseline';
 
 interface ParameterTooltipProps {
   text: string;
@@ -71,15 +72,15 @@ const ParameterTooltip: React.FC<ParameterTooltipProps> = ({ text }) => {
 
 export const ControlRoom: React.FC = () => {
   // Production Inputs
-  const [tph, setTph] = useState<number>(45);
-  const [operatingHours, setOperatingHours] = useState<number>(9);
+  const [tph, setTph] = useState<number>(BASELINE.TARGET_TPH);
+  const [operatingHours, setOperatingHours] = useState<number>(BASELINE.SHIFT_HOURS);
   const [crusherLoad, setCrusherLoad] = useState<number>(75);
 
   // Financial Inputs
-  const [sellingPrice, setSellingPrice] = useState<number>(60);
-  const [zesaTariff, setZesaTariff] = useState<number>(0.1421);
+  const [sellingPrice, setSellingPrice] = useState<number>(BASELINE.SELLING_PRICE_PER_TONNE_USD);
+  const [zesaTariff, setZesaTariff] = useState<number>(0.14);
   const [dieselPrice, setDieselPrice] = useState<number>(1.55);
-  const [monthlyTarget, setMonthlyTarget] = useState<number>(24000);
+  const [monthlyTarget, setMonthlyTarget] = useState<number>(BASELINE.MONTHLY_TARGET_TONNES);
 
   // Order Inputs
   const [orderSizeM2, setOrderSizeM2] = useState<number>(2000);
@@ -124,7 +125,7 @@ export const ControlRoom: React.FC = () => {
 
   // Calculations
   const dailyOutput = tph * operatingHours;
-  const monthlyProjection = dailyOutput * 30;
+  const monthlyProjection = dailyOutput * BASELINE.OPERATING_DAYS_PER_MONTH;
   const progressPercent = Math.min(+((monthlyProjection / monthlyTarget) * 100).toFixed(1), 150);
   const isTargetMet = monthlyProjection >= monthlyTarget;
 
@@ -232,13 +233,13 @@ export const ControlRoom: React.FC = () => {
   const hourlyDieselCost = +(gensetDeficitKw * 0.26 * dieselPrice).toFixed(2);
 
   const handleResetDefaults = () => {
-    setTph(45);
-    setOperatingHours(9);
-    setCrusherLoad(75);
-    setSellingPrice(60);
-    setZesaTariff(0.1421);
+    setTph(BASELINE.TARGET_TPH);
+    setOperatingHours(BASELINE.SHIFT_HOURS);
+    setCrusherLoad(78);
+    setSellingPrice(BASELINE.SELLING_PRICE_PER_TONNE_USD);
+    setZesaTariff(0.14);
     setDieselPrice(1.55);
-    setMonthlyTarget(24000);
+    setMonthlyTarget(BASELINE.MONTHLY_TARGET_TONNES);
     setOrderSizeM2(2000);
     setDeadlineDays(14);
     setSolarKw(154); // 154 kW default (70% of 220 kW rated)
@@ -253,13 +254,13 @@ export const ControlRoom: React.FC = () => {
   };
 
   const handleLoadRealData = () => {
-    setTph(52);
-    setOperatingHours(10);
-    setCrusherLoad(84);
-    setSellingPrice(64);
-    setZesaTariff(0.1421);
-    setDieselPrice(1.62);
-    setMonthlyTarget(26000);
+    setTph(BASELINE.LIVE_TPH_EXAMPLE);
+    setOperatingHours(BASELINE.SHIFT_HOURS);
+    setCrusherLoad(82);
+    setSellingPrice(BASELINE.SELLING_PRICE_PER_TONNE_USD);
+    setZesaTariff(0.14);
+    setDieselPrice(1.55);
+    setMonthlyTarget(BASELINE.MONTHLY_TARGET_TONNES);
     setOrderSizeM2(3500);
     setDeadlineDays(18);
     setSolarKw(154); // 154 kW (70% rated default for 220 kW system)
@@ -358,8 +359,8 @@ export const ControlRoom: React.FC = () => {
                   </div>
                   <input
                     type="number"
-                    min="10"
-                    max="150"
+                    min="20"
+                    max="200"
                     value={tph}
                     onChange={(e) => {
                       setTph(Number(e.target.value));
@@ -725,7 +726,7 @@ export const ControlRoom: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-xl bg-[#FFFDF7] border border-stone-200">
-                <span className="text-xs text-stone-500 block font-medium">Monthly Projection (Daily × 30)</span>
+                <span className="text-xs text-stone-500 block font-medium">Monthly Projection (Daily × {BASELINE.OPERATING_DAYS_PER_MONTH} days)</span>
                 <span className="text-2xl sm:text-3xl font-black text-stone-900 font-mono mt-1 block">
                   {monthlyProjection.toLocaleString()} <span className="text-xs font-normal text-stone-500">tonnes</span>
                 </span>

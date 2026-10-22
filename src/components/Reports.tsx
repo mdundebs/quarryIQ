@@ -18,6 +18,7 @@ import {
   CheckCheck
 } from 'lucide-react';
 import { EXECUTIVE_REPORTS, ReportItem } from '../mockData';
+import { BASELINE } from '../config/baseline';
 
 export const Reports: React.FC = () => {
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
@@ -144,7 +145,7 @@ export const Reports: React.FC = () => {
 📊 NIGHT SHIFT: 180t crushed, 0 downtime
 📦 STOCK: 19mm 4200t | 10mm 2800t | Sand 1100t ⚠️ LOW
 ⚠️ ALERTS: None
-📋 FORECAST: 420t today, promise 1,800m²`}
+📋 FORECAST: ${BASELINE.DAILY_QUOTA_TONNES}t quota today (${BASELINE.SHIFT_HOURS}h @ ${BASELINE.TARGET_TPH} t/h), promise 1,800m²`}
                   </pre>
 
                   {/* WhatsApp Read Receipt Tick */}

@@ -1,0 +1,19 @@
+export const BASELINE = {
+  MONTHLY_TARGET_TONNES: 24000,
+  OPERATING_DAYS_PER_MONTH: 26,
+  SHIFT_HOURS: 9,
+  TARGET_TPH: 100,
+  LIVE_TPH_MIN: 98,
+  LIVE_TPH_MAX: 105,
+  LIVE_TPH_EXAMPLE: 104,
+  DAILY_QUOTA_TONNES: 900,
+  SELLING_PRICE_PER_TONNE_USD: 60,
+  CURRENT_BLENDED_COST_PER_TONNE: 3.95,
+  TARGET_BLENDED_COST_PER_TONNE: 3.20,
+  POTENTIAL_24H_TPH: 220,
+  POTENTIAL_24H_DAILY_TONNES: 5300,
+  POTENTIAL_24H_MONTHLY_TONNES: 63000,
+  ASSUMPTIONS_BANNER_TEXT: "Based on FY2026 Target of 24,000 tonnes/month (26 operating days). Current 9-hour shift at ~100 t/h. Selling price: $60/ton. Current cost: $3.95/ton. Target after automation: ~$3.20/ton.",
+} as const;
+
+export type BaselineConfig = typeof BASELINE;
