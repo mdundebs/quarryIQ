@@ -50,21 +50,25 @@ import { PricingROI } from './components/PricingROI';
 import { DemoTour } from './components/DemoTour';
 import { UserManualDrawer } from './components/UserManualDrawer';
 import { AutoPlayDemo } from './components/AutoPlayDemo';
+import { StabilizationTab } from './components/StabilizationTab';
+import { AdminConsistencyPage } from './components/AdminConsistencyPage';
 
 type TabId =
   | 'landing'
   | 'dashboard'
-  | 'risk-dashboard'
-  | 'pricing-roi'
-  | 'solar-synergy'
+  | 'stabilization'
+  | 'maintenance'
   | 'control-room'
+  | 'risk-dashboard'
+  | 'reports'
+  | 'consistency'
+  | 'pricing-roi'
+  | 'solar'
+  | 'digital-twin'
+  | 'weighbridge'
+  | 'solar-synergy'
   | 'what-if'
   | 'safety'
-  | 'maintenance'
-  | 'digital-twin'
-  | 'solar'
-  | 'reports'
-  | 'weighbridge'
   | 'system-components';
 
 interface TabItem {
@@ -72,26 +76,24 @@ interface TabItem {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string;
+  isPhase2?: boolean;
 }
 
 const TABS: TabItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-  { id: 'risk-dashboard', label: 'Risk Dashboard', icon: ShieldAlert, badge: 'Site Assessment' },
-  { id: 'pricing-roi', label: 'Pricing & ROI', icon: DollarSign, badge: 'MD Justification' },
-  { id: 'solar-synergy', label: 'Solar + Synergy', icon: SunMedium, badge: 'Tender SPV/001' },
-  { id: 'control-room', label: 'Control Room', icon: Sliders, badge: 'Dynamic' },
-  { id: 'what-if', label: 'What-If Simulator', icon: Cpu, badge: '5 Scenarios' },
-  { id: 'safety', label: 'Safety Officer', icon: ShieldCheck },
-  { id: 'maintenance', label: 'Maintenance', icon: Wrench, badge: 'Alert' },
-  { id: 'digital-twin', label: 'Digital Twin', icon: Layers },
-  { id: 'solar', label: 'Solar + Energy', icon: Sun },
-  { id: 'reports', label: 'Reports', icon: FileText, badge: 'WhatsApp' },
-  { id: 'weighbridge', label: 'Weighbridge', icon: Truck, badge: 'Phase 2' },
-  { id: 'system-components', label: 'System Components', icon: CircuitBoard, badge: 'Hardware' },
+  { id: 'dashboard', label: 'CEO View', icon: BarChart3 },
+  { id: 'stabilization', label: 'Phase 1: Stabilization', icon: ShieldCheck, badge: 'Core Focus' },
+  { id: 'control-room', label: 'AI Vision & Spillage', icon: Sliders, badge: 'Live Cams' },
+  { id: 'maintenance', label: 'Predictive Maintenance', icon: Wrench, badge: 'Critical Alert' },
+  { id: 'consistency', label: 'Consistency Check', icon: Activity, badge: 'Super Admin' },
+  // Phase 2 future vision tabs (greyed out)
+  { id: 'pricing-roi', label: 'Pricing & ROI', icon: DollarSign, badge: 'Phase 2', isPhase2: true },
+  { id: 'solar', label: 'Solar & Energy', icon: Sun, badge: 'Phase 2', isPhase2: true },
+  { id: 'digital-twin', label: 'Digital Twin', icon: Layers, badge: 'Phase 2', isPhase2: true },
+  { id: 'weighbridge', label: 'Weighbridge', icon: Truck, badge: 'Phase 2', isPhase2: true },
 ];
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<TabId>('landing');
+  const [currentView, setCurrentView] = useState<TabId>('dashboard');
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<string>('');
   const [liveDataEnabled, setLiveDataEnabled] = useState<boolean>(true);
@@ -202,18 +204,22 @@ export default function App() {
                       className={`relative px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                         isActive
                           ? 'bg-stone-800/90 text-[#FFC72C] shadow-inner font-bold'
+                          : tab.isPhase2
+                          ? 'text-stone-500 hover:text-stone-300 opacity-60'
                           : 'text-stone-300 hover:text-white hover:bg-stone-900/60'
                       }`}
                     >
-                      <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#FFC72C]' : 'text-stone-400'}`} />
+                      <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#FFC72C]' : tab.isPhase2 ? 'text-stone-600' : 'text-stone-400'}`} />
                       <span>{tab.label}</span>
                       {tab.badge && (
                         <span
                           className={`text-[9px] font-bold px-1 py-0.2 rounded leading-none ${
                             isActive
                               ? 'bg-[#FFC72C] text-[#0B0B0F]'
-                              : tab.badge === 'Alert'
-                              ? 'bg-red-500/20 text-red-300 border border-red-500/40'
+                              : tab.isPhase2
+                              ? 'bg-stone-900 text-stone-600 border border-stone-800'
+                              : tab.badge === 'Bleeding Stop'
+                              ? 'bg-[#FFC72C]/20 text-[#FFC72C] border border-[#FFC72C]/40'
                               : 'bg-stone-800 text-stone-400'
                           }`}
                         >
@@ -550,6 +556,8 @@ export default function App() {
             {/* Tab Views with subtle fade-in animation and tab-level footer */}
             <div key={currentView} className="animate-fadeIn space-y-8">
               {currentView === 'dashboard' && <Dashboard liveDataEnabled={liveDataEnabled} />}
+              {currentView === 'stabilization' && <StabilizationTab />}
+              {currentView === 'consistency' && <AdminConsistencyPage userRole="super_admin" onNavigateTab={handleTabClick} />}
               {currentView === 'risk-dashboard' && <RiskDashboard />}
               {currentView === 'pricing-roi' && <PricingROI />}
               {currentView === 'solar-synergy' && <SolarSynergy />}
