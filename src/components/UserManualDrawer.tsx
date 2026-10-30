@@ -1,27 +1,17 @@
 import React, { useState } from 'react';
-import { BASELINE } from '../config/baseline';
 import {
   X,
   BookOpen,
   ChevronDown,
   ChevronUp,
   BarChart3,
-  Sliders,
-  Cpu,
-  FileText,
-  Users,
-  AlertCircle,
-  PhoneCall,
   Sparkles,
   CheckCircle2,
-  HelpCircle,
   Camera,
-  Layers,
-  Zap,
-  Truck,
+  Wrench,
   ShieldAlert,
   DollarSign,
-  Sun
+  PhoneCall
 } from 'lucide-react';
 
 interface UserManualDrawerProps {
@@ -35,18 +25,15 @@ interface ManualSection {
   icon: React.ComponentType<{ className?: string }>;
   summary: string;
   content: string[];
-  mockupType: 'dashboard' | 'control' | 'whatif' | 'reports' | 'roles' | 'troubleshoot' | 'support' | 'gettingStarted';
 }
 
 export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onClose }) => {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     gettingStarted: true,
-    mdDashboard: false,
-    controlRoom: false,
-    whatIf: false,
-    reports: false,
-    roles: false,
-    troubleshooting: false,
+    ceoView: false,
+    investment: false,
+    throughputTest: false,
+    electricalHealth: false,
     support: false,
   });
 
@@ -59,151 +46,70 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
       id: 'gettingStarted',
       title: '1. Getting Started',
       icon: BookOpen,
-      summary: 'How to log in, navigate the quarry interface, and understand the core indicators.',
+      summary: 'How to navigate the QuarryIQ Phase 1 interface and understand key telemetry.',
       content: [
-        'Welcome to QuarryIQ. This system links your crushers, scales, and power sources into one live screen.',
-        'The top navigation bar lets you jump between the 8 main operational areas at any time.',
-        'Use the "Live Data" switch in the top bar to see numbers update in real time every 3 seconds as rock moves through the plant.',
-        'You can return to the initial overview at any time by clicking the QuarryIQ logo in the top left.',
+        'Welcome to QuarryIQ Phase 1. This system monitors electrical stabilization and optical throughput at Davis Granite.',
+        'Use the top navigation bar to switch between the 4 main tabs: CEO View, Phase 1 Investment, Throughput Test, and Electrical Health.',
+        'Click the QuarryIQ logo in the top left at any time to return to the Executive Briefing overview.',
       ],
-      mockupType: 'gettingStarted',
     },
     {
-      id: 'mdDashboard',
-      title: '2. MD Dashboard',
+      id: 'ceoView',
+      title: '2. CEO View Console',
       icon: BarChart3,
-      summary: 'Key figures for the Managing Director: hourly production, stock levels, and revenue run-rate.',
+      summary: 'High-level business health metrics, targets, and risk mitigations.',
       content: [
-        `Instant Throughput (TPH): Shows tonnes crushed per hour. A green number means the plant is beating the ${BASELINE.TARGET_TPH} t/h target (nominal ${BASELINE.LIVE_TPH_MIN}–${BASELINE.LIVE_TPH_MAX} t/h).`,
-        `Daily Production: Displays total tonnes produced today against your daily ${BASELINE.DAILY_QUOTA_TONNES} tonne quota (${BASELINE.SHIFT_HOURS}-hour shift @ ${BASELINE.TARGET_TPH} t/h, ${BASELINE.MONTHLY_TARGET_TONNES.toLocaleString()}t monthly target; 24-hour potential: ~${BASELINE.POTENTIAL_24H_DAILY_TONNES.toLocaleString()}t).`,
-        'Stockpile Inventory: Visual bars showing how full each product pile is (19mm aggregate, G1 sub-base, sand, etc.) with current market dollar values.',
-        'Power Mix Chart: Shows in gold how much free solar power is being used compared to grid electricity.',
+        'Live TPH: Displays live crushed aggregate rate against the 166 t/h benchmark for meeting 4,000 t/day output.',
+        'Daily Production Progress: Tracks actual daily output (1,000 t/day baseline) toward the 4,000 t/day target.',
+        'Risk vs. Automation Matrix: Shows how WEG Soft Starters, ABB VSDs, and AI Camera checks solve transformer overloads, belt snapping, spillage, and revenue leaks.',
+        'Plant Master Control: Enables executive interlock emergency stops across crusher and conveyor sections.',
       ],
-      mockupType: 'dashboard',
     },
     {
-      id: 'riskDashboard',
-      title: '3. Risk Dashboard (Davis Granite Site Assessment)',
-      icon: ShieldAlert,
-      summary: 'Real-time telemetry across 8 critical electrical, environmental, and grid risk parameters.',
-      content: [
-        'Plant Risk Score: Live 0–100 composite index weighting Transformer Load, Power Factor, Motor Megger, MCC Room Temp & Humidity, Water Leak, Lightning, and Grid Stability.',
-        'Transformer Load %: 100% warning, 110% critical threshold to prevent Buchholz relay trips on 1.5 MVA and 2.0 MVA units.',
-        'Power Factor: Kept between 0.95 and 1.00 LAG to eliminate punitive ZESA maximum demand kVAR surcharges.',
-        'Motor Insulation (Megger): Continuous dielectric monitoring with alarms below 1.0 MΩ preventing catastrophic stator flashovers.',
-        'Risk Mitigation Calculator: Calculate exact annual cost savings prevented by automated predictive alarms ($X downtime cost × Y frequency × % prevented).',
-        'SitePlan AI Assistant: One-click interactive engineering guidance trained on Davis Granite operational conditions.',
-      ],
-      mockupType: 'dashboard',
-    },
-    {
-      id: 'pricingRoi',
-      title: '4. Pricing & ROI Model (MD Justification)',
+      id: 'investment',
+      title: '3. Phase 1 Investment Proposal ($102,200)',
       icon: DollarSign,
-      summary: 'Complete engineering cost breakdown, 3 commercial options, What-If payback sensitivity, Qualitative value matrix, and one-pager PDF generation.',
+      summary: 'Turnkey commercial setup table, 12-month support retainer, and 06:00 AM operational story.',
       content: [
-        'Turnkey Cost Breakdown: Full $210,045 schedule (MCC System $87,550, Intelligence Layer $73,635, Commissioning $24,000, Contingency $24,860).',
-        'Option Selector: Option A ($215k + $2.2k/mo), Option B ($235k + $2.5k/mo Recommended), Option C ($255k + $2.8k/mo).',
-        'Executive Metrics: 3-Year Total Investment, Estimated Annual Business Value ($215,840/yr baseline), Estimated Payback in months, and Estimated Return on Investment multiple.',
-        'Qualitative Value Matrix: 8 dimensions detailing energy savings, diesel displacement, downtime avoidance, risk mitigation, and license to operate compliance.',
-        'Important Note on ROI: Prominent amber disclaimer clarifying that figures represent estimated business transformation value, not guaranteed cash returns.',
-        'What-If Sensitivity Slider: Adjust delivered value between 40% and 120% to observe how estimated payback dynamically shifts in real time.',
-        'Comparison Bar Chart: Side-by-side visualization of 5-Year Capex+Opex vs. Estimated 5-Year Value.',
-        'Export ROI One-Pager: Generates executive board-ready PDF document branded with Fireflies Energy.',
+        'Itemized Turnkey Cost: ABB VSDs ($25,000), WEG Soft Starters ($34,000), Relays & Cabling ($3,400), Ivevane Installation ($36,000), and Edge PC & 1x Test Camera ($3,800) = $102,200 Total.',
+        '12-Month Support: $1,999 / month retainer covering remote SCADA monitoring, AI updates, cybersecurity, and on-site staff training.',
+        '06:00 AM Operational Story: Step-by-step sequence showing how HMI start triggers soft starters, VSD ramps, optical camera sizing, PLC translation, and Edge PC telemetry.',
       ],
-      mockupType: 'control',
     },
     {
-      id: 'solarSynergy',
-      title: '5. Solar + Automation Synergy (Tender SPV/001/2026)',
-      icon: Sun,
-      summary: 'Demonstrates how automation amplifies the planned solar tender (Bulawayo ~220 kWp PoC + Harare ~250–350 kWp expansion), cutting payback from 3.7 to 1.2 years and capturing +$160,720/year.',
+      id: 'throughputTest',
+      title: '4. Throughput Test (1x Camera)',
+      icon: Camera,
+      summary: '1080p optical aggregate counter at 19mm ST discharge cross-checking belt scale accuracy.',
       content: [
-        'Multi-Site Rollout: Phase 1 Bulawayo PoC (~220 kWp, 367 panels, $88k CAPEX), Phase 2 Harare expansion (~250–350 kWp), and Phase 3 Marondera (Pending).',
-        'Solar Without Automation (65% self-consumption): Shows losses from 0.85 credit discount on exported power, and 100% idle solar array during diesel load-shedding.',
-        'Solar With Automation (90% self-consumption): Explains kinetic rock buffer shifting, peak shaving (25-40% ZESA drop), and safe solar-diesel synchronization.',
-        'Synergy Value Schedule ($160,720/yr): Self-consumption uplift ($21,197), diesel fuel reduction ($84,863), carbon credits ($4,260), and green rock premium ($50,400).',
-        'Tender SPV/001/2026 Alignment: Explains why QuarryIQ automation is 100% complementary to the solar EPC tender, not competitive.',
-        'Combined Capital Return: Shows how combined solar + automation capex pays back in 1.2 years instead of 3.7 years for solar alone.',
+        'Optical Volumetric Sizing: Edge AI measures falling aggregate volume and grain size distribution in real time.',
+        'Reference Case Study Note: Explains why belt scale drift (2-4%) creates revenue leaks in high-capacity mines.',
+        'Scale vs. AI Comparison Widget: Displays BST100 Scale (1,000 t/day) vs AI Camera Calc (1,040 t/day) to detect +4% scale variance immediately.',
       ],
-      mockupType: 'dashboard',
     },
     {
-      id: 'controlRoom',
-      title: '6. Control Room',
-      icon: Sliders,
-      summary: 'Management testing ground to enter real numbers and immediately see the financial impact.',
+      id: 'electricalHealth',
+      title: '5. Electrical Health',
+      icon: Wrench,
+      summary: 'Live condition monitoring for new Phase 1 electrical infrastructure.',
       content: [
-        'Left Panel (Inputs): Type in your current TPH, shift hours, rock selling price, electricity tariff, and customer orders.',
-        'Card 1 (Production Forecast): Automatically calculates daily and monthly tonnage against your quota with a clear green/red indicator.',
-        'Card 2 (Order Feasibility): Tells you in plain words: YES or NO, can we deliver this customer order before the deadline?',
-        'Card 3 (Energy Cost): Calculates your total electricity bill and cost per tonne.',
-        'Card 5 (Power Cut Simulator): Tap to see how your plant behaves if the grid goes down.',
+        'ABB VSD 1 (Primary Conveyor): HEALTHY - 40Hz - 45°C.',
+        'WEG Soft Starter (C140 Jaw): HEALTHY - 110A.',
+        'Siemens PLC: ONLINE - CPU Load 18%.',
+        'BST100 Scale: CONNECTED - Modbus RTU telemetry active.',
       ],
-      mockupType: 'control',
-    },
-    {
-      id: 'whatIf',
-      title: '5. What-If Simulator',
-      icon: Cpu,
-      summary: 'One-click scenarios testing what happens during power cuts, huge orders, or equipment troubles.',
-      content: [
-        'Select any business disruption button (such as a 4-hour power cut or a sudden 50,000t export contract).',
-        'The simulation runs for 2 seconds and reveals exact dollars saved or gained.',
-        'Read the Managing Director takeaway box at the bottom for the commercial lesson of each scenario.',
-      ],
-      mockupType: 'whatif',
-    },
-    {
-      id: 'reports',
-      title: '6. Reports & WhatsApp Briefings',
-      icon: FileText,
-      summary: 'The 06:00 AM daily executive WhatsApp brief and downloadable board audits.',
-      content: [
-        'Inspect the phone screen preview showing the exact 06:00 AM WhatsApp text sent to the Managing Director.',
-        'It lists night-shift output, stock balances, low-stock warnings, and required approvals.',
-        'Click "Download" on any board report to receive official PDF, Excel, or CSV audit spreadsheets.',
-      ],
-      mockupType: 'reports',
-    },
-    {
-      id: 'roles',
-      title: '7. User Roles & Access',
-      icon: Users,
-      summary: 'Permissions for Managing Director, Quarry Manager, Weighbridge Operator, and Shift Foreman.',
-      content: [
-        'Managing Director (C-Suite): Full access to revenue, cost per tonne, WhatsApp briefs, and commercial order sign-offs.',
-        'Quarry Manager: Full control of plant setpoints, maintenance swap staging, and crusher closed-side settings (CSS).',
-        'Safety Officer: Dedicated views for dust opacity meters, blast safety checklists, and government compliance logs.',
-        'Weighbridge Operator: Fast vehicle ticketing, ANPR plate review, and axle weight verification.',
-      ],
-      mockupType: 'roles',
-    },
-    {
-      id: 'troubleshooting',
-      title: '8. Troubleshooting & FAQs',
-      icon: AlertCircle,
-      summary: 'Quick answers for common sensor alerts and offline telemetry questions.',
-      content: [
-        'Why is a stockpile marked "Low"? The inventory level has dropped below 3 days of customer sales. Increase screening deck priority.',
-        'What does "Axle Drift" mean on the weighbridge? A truck has uneven weight distribution across its rear axles, triggering an audit to protect road laws.',
-        'Is internet required at the quarry? No. QuarryIQ runs on a local edge server on site. It keeps working even during telecoms blackouts.',
-      ],
-      mockupType: 'troubleshoot',
     },
     {
       id: 'support',
-      title: '9. Contact Support & Engineering',
+      title: '6. Support & Engineering Contacts',
       icon: PhoneCall,
-      summary: 'Direct lines to Fireflies Energy engineering and technical field support.',
+      summary: 'Direct engineering lines for Fireflies Energy, Ivevane Automation, and Ndebele Visionary Nexus.',
       content: [
-        'Provider: Fireflies Energy (Pvt) Ltd',
-        'System: QuarryIQ Rock-to-Revenue Intelligence Suite v1.0',
-        'Direct MD Support Hotline: +263 77 000 0000',
-        'Email Support: support@firefliesenergy.com',
-        'Dedicated On-Site Engineering: Harare & Bulawayo Quarry Response Teams',
+        'Presented by: Fireflies Energy (Pvt) Ltd',
+        'Electrical & Drives: Ivevane Automation',
+        'Fabrication, Cybersecurity & Training: Ndebele Visionary Nexus',
+        'Hotline: +263 77 000 0000 | Email: support@firefliesenergy.com',
       ],
-      mockupType: 'support',
     },
   ];
 
@@ -211,17 +117,11 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
-      {/* Backdrop */}
-      <div
-        onClick={onClose}
-        className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
-      />
+      <div onClick={onClose} className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity" />
 
-      {/* Slide-In Drawer from Right */}
       <div className="absolute inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-xl bg-white shadow-2xl flex flex-col border-l border-stone-200">
-          {/* Drawer Header */}
-          <div className="bg-[#0B0B0F] text-white p-6 border-b border-stone-800 flex items-center justify-between">
+        <div className="w-screen max-w-xl bg-stone-900 text-white shadow-2xl flex flex-col border-l border-stone-800">
+          <div className="bg-[#0B0B0F] text-white p-6 border-b border-stone-800 flex items-center justify-between font-mono">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-[#FFC72C] text-[#0B0B0F] flex items-center justify-center font-black">
                 <BookOpen className="w-5 h-5 text-[#0B0B0F]" />
@@ -230,11 +130,11 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
                 <h3 className="text-lg font-black text-white flex items-center gap-2">
                   <span>QuarryIQ User Manual</span>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FFC72C] text-[#0B0B0F]">
-                    PLAIN ENGLISH
+                    PHASE 1
                   </span>
                 </h3>
                 <p className="text-xs text-stone-400 mt-0.5">
-                  Clear, executive explanations for Davis Granite leadership
+                  Executive guide for Davis Granite leadership
                 </p>
               </div>
             </div>
@@ -242,22 +142,19 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
             <button
               onClick={onClose}
               className="p-2 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer"
-              title="Close User Manual"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Drawer Scrollable Content */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-[#FFFDF7]">
-            <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
-              <Sparkles className="w-4 h-4 text-[#B38300] shrink-0 mt-0.5" />
+          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-[#0B0B0F] font-mono">
+            <div className="p-4 rounded-xl bg-stone-900 border border-[#FFC72C]/40 text-xs text-stone-200 flex items-start gap-2.5">
+              <Sparkles className="w-4 h-4 text-[#FFC72C] shrink-0 mt-0.5" />
               <span>
-                <strong>Quick Guide:</strong> Click any section below to expand plain-English instructions and interface mockups. No technical jargon.
+                <strong className="text-[#FFC72C]">Quick Guide:</strong> Click any section below to expand plain-English explanations for Phase 1 operations.
               </span>
             </div>
 
-            {/* Accordion Sections */}
             <div className="space-y-3">
               {sections.map((section) => {
                 const Icon = section.icon;
@@ -266,23 +163,19 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
                 return (
                   <div
                     key={section.id}
-                    className="bg-white rounded-xl border border-stone-200/90 shadow-2xs overflow-hidden transition-all"
+                    className="bg-stone-900 rounded-xl border border-stone-800 overflow-hidden transition-all"
                   >
                     <button
                       onClick={() => toggleSection(section.id)}
-                      className="w-full p-4 flex items-center justify-between text-left hover:bg-stone-50/80 transition-colors cursor-pointer"
+                      className="w-full p-4 flex items-center justify-between text-left hover:bg-stone-800/60 transition-colors cursor-pointer"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-stone-900 text-[#FFC72C] flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-stone-950 text-[#FFC72C] flex items-center justify-center shrink-0 border border-stone-800">
                           <Icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-sm text-stone-900">
-                            {section.title}
-                          </h4>
-                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">
-                            {section.summary}
-                          </p>
+                          <h4 className="font-bold text-sm text-white">{section.title}</h4>
+                          <p className="text-xs text-stone-400 line-clamp-1 mt-0.5">{section.summary}</p>
                         </div>
                       </div>
 
@@ -294,37 +187,15 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
                     </button>
 
                     {isOpenSection && (
-                      <div className="p-4 pt-0 border-t border-stone-100 bg-[#FAF8F2]/40 space-y-3 text-xs text-stone-700">
-                        {/* Bulleted Content */}
-                        <ul className="space-y-2 pt-3">
+                      <div className="p-4 pt-0 border-t border-stone-800 bg-stone-950 space-y-3 text-xs text-stone-300">
+                        <ul className="space-y-2 pt-3 font-sans">
                           {section.content.map((point, idx) => (
                             <li key={idx} className="flex items-start gap-2">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                               <span className="leading-relaxed">{point}</span>
                             </li>
                           ))}
                         </ul>
-
-                        {/* Screenshot / Mockup Illustration Placeholder */}
-                        <div className="mt-3 p-3 rounded-lg bg-stone-100 border border-stone-200 flex flex-col items-center justify-center text-center">
-                          <div className="w-full bg-[#0B0B0F] text-white p-2.5 rounded-md text-[11px] font-mono flex items-center justify-between">
-                            <span className="text-stone-400 uppercase text-[10px]">
-                              SCREEN MOCKUP: {section.title}
-                            </span>
-                            <span className="text-[#FFC72C] font-bold">QuarryIQ UI</span>
-                          </div>
-                          <div className="py-4 text-stone-500 text-[11px] flex flex-col items-center gap-1">
-                            <div className="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-stone-600 mb-1">
-                              <Icon className="w-4 h-4" />
-                            </div>
-                            <span className="font-medium text-stone-700">
-                              [UI Mockup: Interactive {section.title} Panel]
-                            </span>
-                            <span className="text-[10px] text-stone-400">
-                              Shows automated sensors, live telemetry cards, and color-coded status badges
-                            </span>
-                          </div>
-                        </div>
                       </div>
                     )}
                   </div>
@@ -333,10 +204,9 @@ export const UserManualDrawer: React.FC<UserManualDrawerProps> = ({ isOpen, onCl
             </div>
           </div>
 
-          {/* Drawer Footer */}
-          <div className="p-4 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs text-stone-500 font-mono">
+          <div className="p-4 bg-[#0B0B0F] border-t border-stone-800 flex items-center justify-between text-xs text-stone-400 font-mono">
             <span>Fireflies Energy (Pvt) Ltd</span>
-            <span>Manual v1.0 &bull; Davis Granite</span>
+            <span>Manual v1.0 &bull; Phase 1</span>
           </div>
         </div>
       </div>
